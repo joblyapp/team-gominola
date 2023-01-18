@@ -5,6 +5,8 @@ const session = require("express-session");
 const passport = require("passport");
 const dotenv = require("dotenv");
 dotenv.config();
+const { loginCheck } = require("./auth/passport");
+loginCheck(passport);
 
 // MongoDb connection
 const database = process.env.MONGODB_URI;
@@ -36,6 +38,6 @@ app.use(passport.session());
 
 // Routes
 app.use("/", require("./routes/login"));
-const PORT = process.env.PORT || 3001;
 
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, console.log(`Server started on http://localhost:${PORT}`));
