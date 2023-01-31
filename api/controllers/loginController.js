@@ -1,5 +1,5 @@
-const User = require("../models/User");
-const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 // Register Page
 const registerView = (req, res) => {
@@ -12,46 +12,34 @@ const loginView = (req, res) => {
 };
 
 // POST Request that handles Register
-const registerUser = async (req, res) => {
-  const { name, email, location, password, confirm } = req.body;
-  if (!name || !email || !password || !confirm) {
-    console.log("Fill empty fields");
-  } else if (password !== confirm) {
-    console.log("Passwords must match");
-  } else {
-    const foundUser = await User.findOne({ email });
-    if (foundUser) {
-      console.log("There's already a user for this email");
-      res.render("register", {
-        name,
-        email,
-        password,
-        confirm,
-      });
-    } else {
-      const newUser = new User({
-        name,
-        email,
-        location,
-        password,
-      });
-      const salt = await bcrypt.genSalt(10);
-      const hash = await bcrypt.hash(newUser.password, salt);
-      newUser.password = hash;
-      console.log(newUser);
-      return newUser
-        .save()
-        .then(res.redirect("/login"))
-        .catch((error) => console.error(error));
-    }
-  }
+const registerUser = (req, res, next) => {
+  console.log(`${req.user.email} user with ${req.user._id} id created.`);
+  return res.redirect("/login");
 };
 
 // POST Request that handles Login
-const passport = require("passport");
+const JWTstrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
+
 
 const loginUser = (req, res, next) => {
-  const { email, password } = req.body;
+  passport.use(
+    new JWTstrategy(
+      {
+        secretOrKey: 'TOP_SECRET',
+        jwtFromRequest: ExtractJWT.fromUrlQueryParameter('secret_token')
+      },
+      async (token, done) => {
+        try {
+          
+          return done(null, token.user);
+        } catch (error) {
+          done(error);
+        }
+      }
+    )
+  );
+  /*   const { email, password } = req.body;
   if (!email || !password) {
     console.log("Please fill in all the fields");
     res.render("login", {
@@ -64,7 +52,7 @@ const loginUser = (req, res, next) => {
       failureRedirect: "/login",
       failureFlash: true,
     })(req, res, next);
-  }
+  } */
 };
 
 module.exports = {

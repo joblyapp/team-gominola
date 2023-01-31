@@ -1,4 +1,5 @@
 const express = require("express");
+const { passportRegister, passportLogin } = require("../auth/passport");
 const { protectRoute } = require("../auth/protect");
 const { dashboardView } = require("../controllers/dashboardController");
 const {
@@ -14,7 +15,7 @@ router.get("/register", registerView);
 router.get("/login", loginView);
 router.get("/dashboard", protectRoute, dashboardView);
 
-router.post("/register", registerUser);
-router.post("/login", loginUser);
+router.post("/register", passportRegister, registerUser);
+router.post("/login", passportLogin, loginUser);
 
 module.exports = router;
