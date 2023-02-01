@@ -1,0 +1,213 @@
+@import "../root.scss";
+.div-form {
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+
+    .form {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        .form-background-color {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.678);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            .title-form {
+                margin-top: 2rem;
+                font-weight: 700;
+                text-decoration-line: underline;
+            }
+
+            .form-contact {
+                width: 90%;
+
+                .col-form {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+
+                    .form {
+                        display: flex;
+                        justify-content: center;
+                        align-items: flex-start;
+                        width: 100%;
+
+                        h4 {
+                            margin-bottom: 0.1rem;
+                        }
+
+                        .input-form {
+                            width: 20rem;
+                            background-color: transparent;
+                            border: none;
+                            outline: none;
+                            border-bottom: 2px solid rgba(255, 255, 255, 0.596);
+                            margin-bottom: 2rem;
+                            color: white;
+                        }
+
+                        input::placeholder {
+                            color: rgba(255, 255, 255, 0.596)
+                        }
+
+                        .date-form {
+                            margin-bottom: 2rem;
+                            outline: none;
+                        }
+
+                        .btn {
+                            color: white;
+                            border: 3px solid $golden;
+                        }
+                        .btn:hover {
+                            background-color: $gris;
+                            border: 3px solid $golden;
+                        }
+                    }
+
+                    .sec-form {
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: flex-start;
+                        flex-direction: column;
+                        width: 100%;
+                        margin: 2rem;
+
+                        .title {
+                            display: flex;
+                            align-items: center;
+
+                            width: 100%;
+                            gap: 1rem;
+
+                            .line {
+                                width: 2rem;
+                                height: 0px;
+                                border: 1px solid white;
+                                margin-top: -0.5rem;
+                            }
+                        }
+
+                        .icons {
+                            display: flex;
+                            width: 100%;
+                            align-items: center;
+
+                            .bi {
+                                font-size: 2rem;
+                                margin: 2rem;
+                            }
+                            .bi:hover {
+                                color:$golden;
+                                font-size: 3rem;
+                                transition: 0.5s;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:768px) {
+    .div-form {
+        height: 110vh;
+
+        .form {
+            background-position: 35%;
+
+            .form-background-color {
+                .title-form {
+                    margin: 2rem;
+                }
+
+                .form-contact {
+                    .col-form {
+                        .form {
+                            h4 {}
+
+                            .input-form {}
+
+                            input::placeholder {}
+
+                            .date-form {}
+
+                            .btn {}
+                        }
+
+                        .sec-form {
+                            .title {
+                                .line {}
+                            }
+
+                            .icons {
+                                display: flex;
+                                width: 75%;
+                                align-items: center;
+
+                                .bi {
+                                    font-size: 1.5rem;
+                                    margin: 1rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width:576px) {
+    .div-form {
+        height: 120vh;
+
+        .form {
+            .form-background-color {
+                .title-form {
+                    margin: 2rem;
+                }
+
+                .form-contact {
+                    .col-form {
+                        .form {
+                            h4 {}
+
+                            .input-form {}
+
+                            input::placeholder {}
+
+                            .date-form {}
+
+                            .btn {}
+                        }
+
+                        .sec-form {
+                            .title {
+                                .line {}
+                            }
+
+                            .icons {
+                                .bi {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}

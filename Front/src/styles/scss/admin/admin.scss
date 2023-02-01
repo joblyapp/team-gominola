@@ -1,0 +1,53 @@
+.admin {
+    background-color: rgb(0, 0, 0);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    .title{
+        margin-top: 5rem;
+        .admin-title {
+            color: rgb(255, 255, 255);
+        }
+    }
+
+
+    .row-admin {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+
+        .col-admin {
+            padding: 2rem;
+            border: 2px solid rgb(255, 255, 255);
+            border-radius: 1rem;
+            max-width: 20rem;
+            max-height: 20rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            h1 {
+                color: black;
+            }
+        }
+        .col-admin:hover {
+            padding: 2rem;
+            border: 2px solid black;
+            border-radius: 1rem;
+            max-width: 22rem;
+            max-height: 22rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: rgb(255, 255, 255);
+
+            h1 {
+                color: black;
+            }
+        }
+    }
+}

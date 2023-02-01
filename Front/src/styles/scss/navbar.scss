@@ -1,0 +1,184 @@
+@import "./root.scss";
+.nav {
+    position: sticky;
+    top: 0;
+    width: 100vw;
+    height: 10rem;
+    text-align: center;
+    display: block;
+    .list {
+        height: 100%;
+        display: flex;
+        position: absolute;
+        align-items: center;
+        width: 100%;
+
+        .logo-div {
+            width: 25%;
+            margin-top: 1rem;
+
+            li {
+                width: 100%;
+                height: 100%;
+
+                .logo {
+                    width: auto;
+                    height: 10rem;
+                    margin: 2rem 1rem;
+                }
+            }
+        }
+
+        .list-items {
+            width: 70%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            .items {
+                margin: 0 1rem;
+                font-size: 1.75rem;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .logo-menu {
+        display: none;
+        position: absolute;
+        left: 1rem;
+    }
+
+    .btn {
+        display: none;
+        position:absolute;
+        background-color: white;
+        padding: 0.3rem;
+        right: 2rem;
+        top:0.55rem;
+
+        img {
+            width: 3rem;
+            height: 3rem;
+        }
+    }
+}
+
+@media screen and (max-width:1400px) {
+    .nav {
+        height: 8rem;
+        z-index: 10;
+
+        .list {
+            .logo-div {
+                li {
+                    .logo {
+                        width: auto;
+                        height: 8rem;
+                    }
+                }
+            }
+
+            .list-items {
+                .items {
+                    margin: 0 2.5rem;
+                    font-size: 1.5rem;
+                }
+            }
+        }
+
+        .a {}
+
+        .btn {}
+    }
+
+}
+
+@media screen and (max-width:992px) {
+    .nav {
+        height: 6rem;
+
+        .list {
+            .logo-div {
+                li {
+                    .logo {
+                        width: auto;
+                        height: 8rem;
+                    }
+                }
+            }
+
+            .list-items {
+                .items {
+                    margin: 0 1.5rem;
+                    font-size: 1.15rem;
+                }
+            }
+        }
+
+        .logo-menu {}
+
+        .btn {}
+    }
+
+}
+
+
+
+
+
+@media screen and (max-width:768px) {
+    .nav {
+        position: fixed;
+        background-color: $gris;
+        height: 5rem;
+        .list {
+            display: block;
+            margin: 0;
+            margin-top: 0rem;
+            flex-direction: column;
+            height: auto;
+            background-color: $gris;
+            padding: 0;
+            .logo-div {
+                li {
+                    .logo {
+                        display: none;
+                    }
+                }
+            }
+            .list-items {
+                flex-direction: column;
+                width: 100%;
+                margin-top: 1rem;
+                .items {
+                    font-size: 1.3rem;
+                    margin: 1rem 0;
+                    color: #ffffff;
+                    cursor: pointer;
+                }
+            }
+        }
+        .btn {
+            display: block;
+        }
+        .btn:hover {
+            background-color: #c7c7c7;
+            padding: 0.5rem;
+            transition: 0.3s;
+            img {
+                width: 3rem;
+                height: 3rem;
+                
+            }
+        }
+
+        .logo-menu {
+            display: block;
+            width: auto;
+            height: 6rem;
+            margin-top: -0.5rem;
+            
+        }
+    }
+}

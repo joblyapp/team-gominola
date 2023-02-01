@@ -1,0 +1,189 @@
+@import "../root.scss";
+.div-more {
+    width: 100vw;
+    height: auto;
+    display: flex;
+
+    .more {
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background-position: 50%;
+
+        .one-sec {
+            height: 15%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            width: 90%;
+
+            h3 {
+                margin: 1rem 2rem;
+                font-size: 3rem;
+                font-weight: 800;
+            }
+
+            .see-more {
+                background-color: transparent;
+                border: none;
+                font-size: 2rem;
+                padding: 1rem 2rem;
+                color: white;
+                font-weight: 800;
+                text-decoration-line: underline;
+            }
+            .see-more:hover {
+                color:rgb(0, 0, 0);
+                background-color: white;
+                border-radius: 2rem;
+            }
+        }
+
+        .two-sec {
+            width: 80%;
+            height: 85%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .more-purchased {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                .img-fluid{
+                    border-radius: 50%;
+                }
+                .up{
+                    margin-top: -20rem;
+                }
+                .down{
+                    margin-top: 20rem;
+                }
+            }
+            .more-purchased:hover {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                cursor: pointer;
+                
+                .img-fluid{
+                    border: 5px solid $golden;
+                    transition: 0.3s ease-in-out;
+                }
+                .up{
+                }
+                .down{
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width:1200px) {
+    .div-more {
+        height: auto;
+        .more{
+            background-position: 52%;
+        }
+    }
+}
+@media screen and (max-width:768px) {
+    .div-more {
+        .more {
+            background-position: 50%;
+            .one-sec {
+                
+                h3 {
+                    font-size: 2rem;
+                }
+                .see-more {
+                    font-size: 1.5rem;
+                }
+            }
+            .two-sec {
+                width: 100%;
+                .more-purchased {
+                    .img-fluid{
+                    }
+                    .up{
+                        margin-top: -10rem;
+                    }
+                    .down{
+                        margin-top: 10rem;
+                    }
+                }
+            }
+        }
+    }
+}
+@media screen and (max-width:576px) {
+    .div-more {
+        height: 100vh;
+        .more {
+            .one-sec {
+                
+                h3 {
+                    font-size: 1.5rem;
+                }
+    
+                .see-more {
+                    font-size: 1.5rem;
+                }
+            }
+    
+            .two-sec {
+                width: 100%;
+                margin-bottom: 2rem;
+    
+                .more-purchased {
+                    .img-fluid{
+                    }
+                    .up{
+                        margin-top: -8rem;
+                    }
+                    .down{
+                        margin-top: 8rem;
+                    }
+                }
+    
+            }
+        }
+    }
+}
+@media screen and (max-width:480px) {
+    .div-more {
+        height: 100vh;
+        .more {
+            .one-sec {
+                
+                h3 {
+                }
+    
+                .see-more {
+                }
+            }
+    
+            .two-sec {
+
+    
+                .more-purchased {
+                    .img-fluid{
+                    }
+                    .up{
+                        margin-top: -6rem;
+
+                    }
+                    .down{
+                        margin-top: 6rem;
+                    }
+                }
+    
+            }
+        }
+    }
+}
