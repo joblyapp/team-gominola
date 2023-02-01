@@ -1,0 +1,58 @@
+.createCategory {
+    background-color: rgb(231, 231, 231);
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    .navbarCreateCategory{
+        background-color: black;
+    }
+
+    .createCTitle {
+        color: black;
+        margin: 1rem;
+    }
+
+    .forms {
+        border: 1px solid black;
+        padding: 1rem;
+        border-radius: 1rem;
+        background-color: rgb(255, 255, 255);
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        width: auto;
+
+        .preview {
+            .img-fluid {
+                max-height: 20rem;
+                max-width: 20rem;
+            }
+        }
+
+        .form-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .check {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                justify-content: center;
+
+                .form-check-input {
+                    width: 2rem;
+                    height: 2rem;
+                }
+            }
+
+            .text-error {
+                color: black;
+            }
+        }
+
+    }
+}
