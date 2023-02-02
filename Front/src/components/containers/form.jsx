@@ -26,7 +26,17 @@ const Form = () => {
                                 <input className="date-form" type="time" min="00:00" max="23:59" name="time" />
                                 <h5>Personas: </h5>
                                 <input type="number" className="date-form" name="people" min="1" defaultValue={1} />
-                                <input type="submit" className='btn' value="Hacer mi reserva" />
+                                <input type="submit" className='btn' value="Hacer mi reserva" data-bs-toggle="modal" data-bs-target="#exampleModal" />
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5 text-black" id="exampleModalLabel" >Gracias por hacer tu reversa</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <input type="hidden" name="_next" value={`${MY_URL}`} />
                                 <input type="hidden" name="_captcha" value="false"></input>
 
