@@ -42,6 +42,7 @@ export const LoginReducer = (state = initialState, action) => {
                 error: action.payload.error
             }
         case "LOGOUT":
+            localStorage.removeItem("token")
             return {
                 ...state,
                 getting: false,

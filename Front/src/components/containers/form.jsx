@@ -1,7 +1,13 @@
 import React from 'react';
 import "../../styles/scss/home/form.scss"
 import formBackground from "../../resources/background-04.jpg"
+import { useNavigate } from "react-router-dom"
 const Form = () => {
+
+    const MY_URL = process.env.REACT_APP_MY_URL || "http://localhost:3001/api";
+    const EMAIL = process.env.REACT_APP_EMAIL || "http://localhost:3001/api";
+    const navigate = useNavigate()
+
     return (
         <div className='div-form' id="form">
             <div className="form" style={{ backgroundImage: `url(${formBackground})` }}>
@@ -9,9 +15,7 @@ const Form = () => {
                     <h1 className='title-form' id="form-title">!Reserva tu mesa!</h1>
                     <div className="row form-contact">
                         <div className="col-12 col-md-6 col-form">
-                            <form action="" method="post" className='form' onSubmit={(e) => {
-
-                            }}>
+                            <form action={`https://formsubmit.co/${EMAIL}`} method="POST" class="form">
                                 <h5>Nombre de orden: </h5>
                                 <input className="input-form" type="text" placeholder='Su nombre' name="name" />
                                 <h5>Telefono: </h5>
@@ -22,7 +26,10 @@ const Form = () => {
                                 <input className="date-form" type="time" min="00:00" max="23:59" name="time" />
                                 <h5>Personas: </h5>
                                 <input type="number" className="date-form" name="people" min="1" defaultValue={1} />
-                                <input type="submit" className='btn' value={"Hacer mi reserva"} />
+                                <input type="submit" className='btn' value="Hacer mi reserva" />
+                                <input type="hidden" name="_next" value={`${MY_URL}`} />
+                                <input type="hidden" name="_captcha" value="false"></input>
+
                             </form>
                         </div>
 
@@ -35,7 +42,7 @@ const Form = () => {
                                     </div>
                                 </div>
                                 <div className="text-form">
-                                    <h1>Valeluya  Nostra, 1122</h1>
+                                    <h1>Argentina</h1>
                                 </div>
                             </div>
                             <div className="sec-form">
@@ -57,13 +64,13 @@ const Form = () => {
                                     </div>
                                 </div>
                                 <div className="icons">
-                                    <a href="">
+                                    <a href="https://www.instagram.com/identikit_app/">
                                         <i class="bi bi-instagram"></i>
                                     </a>
-                                    <a href="">
+                                    <a href="https://www.instagram.com/identikit_app/">
                                         <i class="bi bi-twitter"></i>
                                     </a>
-                                    <a href="">
+                                    <a href="https://www.facebook.com/IDentiKITapp">
                                         <i class="bi bi-facebook"></i>
                                     </a>
                                 </div>
