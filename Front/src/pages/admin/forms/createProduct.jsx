@@ -20,11 +20,11 @@ const CreateProduct = ({ token }) => {
     const [file, setFile] = useState(null)
     const [preview, setPreview] = useState()
 
-    const categorySchema = yup.object().shape(
+    const productSchema = yup.object().shape(
         {
-            name: yup.string().required("Ponle un nombre a la categoria"),
-            description: yup.string(),
-            price: yup.number().required(),
+            name: yup.string().required("Ponle un nombre al producto"),
+            description: yup.string().max(200,"La descripción de un producto debe ser de maximo 200 caracteres"),
+            price: yup.number().required().max(10000000,"El precio maximo de un producto puede ser 10000000"),
         }
     )
 
@@ -93,7 +93,7 @@ const CreateProduct = ({ token }) => {
                     initialValues={
                         initialValues
                     }
-                    validationSchema={categorySchema}
+                    validationSchema={productSchema}
                     onSubmit={async (values) => {
                         createStorage(values)
                     }}

@@ -1,4 +1,5 @@
 @import "../root.scss";
+
 .div-cartaP {
     width: 100vw;
     min-height: 100vh;
@@ -42,7 +43,8 @@
                 width: 40%;
                 border: 1px solid black;
                 background-color: aliceblue;
-                border-radius: 1.25rem ;
+                border-radius: 1.25rem;
+                margin-top: 10rem;
 
                 .col-carta-title {
                     font-weight: 800;
@@ -50,20 +52,27 @@
                 }
             }
 
-            .col-cartaP:hover{
-                border: 5px solid $golden;
-            }
-
-
             .col-comida {
                 background-size: cover;
                 background-position: 30%;
+                transition: 1s;
             }
+            .col-comida:hover {
+                background-position: 60% 30%;
+                transition: 1s;
+            }
+
 
             .col-bebidas {
                 background-size: cover;
                 background-position: 30%;
+                transition: 1s;
             }
+            .col-bebidas:hover {
+                background-position: 60% 30%;
+                transition: 1s;
+            }
+
         }
     }
 }
@@ -120,6 +129,7 @@
                 .col-comida {
                     background-size: cover;
                 }
+
                 .col-bebidas {
                     background-size: cover;
                     background-position: 20%;
@@ -150,6 +160,7 @@
             height: 100%;
             flex-direction: column;
             gap: 2rem;
+            
 
             .cartaP-title {
                 font-weight: 800;
@@ -171,6 +182,7 @@
                     width: 45%;
                     border: 1px solid black;
                     background-color: aliceblue;
+                    margin-top: 1rem;
 
                     .col-carta-title {
                         font-weight: 800;

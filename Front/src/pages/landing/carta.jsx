@@ -14,7 +14,6 @@ const Carta = () => {
             <Navbar></Navbar>
             <div className="cartaHeight">
                 <div className="cartaP">
-                    <h1 className='text-center cartaP-title'>¿Qué desea eligir?</h1>
                     <div className="row row-cartaP">
                         <div className="col-12 col-xl-6 col-cartaP col-bebidas btn" onClick={()=>{
                             navigate("../carta/bebidas")

@@ -85,7 +85,7 @@ const SectionProduct = ({ category }) => {
                     </div>
                 </div>
                 :
-                <div className='row row-carta'>
+                <div className='row row-carta-big'>
                     <div className="col-12 col-md-6 col-carta">
                         <div className="section">
                             <div className="title-section">
