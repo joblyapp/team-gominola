@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { viewCategories } from "../../../redux/actions/actions"
-import Carta from "../carta"
-import CartaComidas from '../cartaComidas'
+import CartaBebidas from '../cartaBebidas'
 
 const mapStateToProps = (state) => {
     return {
@@ -17,4 +16,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Carta)
+export default connect(mapStateToProps, mapDispatchToProps)(CartaBebidas)

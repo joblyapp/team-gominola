@@ -3,27 +3,29 @@
 .div-carta {
     width: 100vw;
     height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    min-height: 100vh;
+    flex-direction: column;
+    backdrop-filter: blur(4px);
+    background-size: 100%;
+    background-position: 50%;
 
     .carta {
         width: 100%;
         height: auto;
         background-size: cover;
         background-repeat: repeat;
-        background-position: 20rem;
+        background-position: 50%;
+        
 
         .carta-blur {
             width: 100%;
             height: auto;
             position: absolute;
-            backdrop-filter: blur(1px);
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            background-position: 500%;
+            background-position: 50%;
 
             .title {
                 font-weight: 700;
@@ -33,22 +35,25 @@
 
             .row-carta {
                 width: 90%;
-                background-color: $gris;
+                background-color: #20202086;
+                backdrop-filter: blur(10px);
                 border-radius: 0.3rem;
                 display: flex;
                 justify-content: center;
                 height: auto;
-                margin: 3rem 0rem;
+                margin: 1rem 0rem;
 
                 .col-carta {
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     flex-direction: column;
+                    background-color: transparent;
 
                     .section {
                         margin: 0.5rem;
                         width: 100%;
+                        background-color: transparent;
 
                         .title-section {
                             display: flex;
@@ -117,6 +122,8 @@
             }
         }
     }
+
+
 }
 
 

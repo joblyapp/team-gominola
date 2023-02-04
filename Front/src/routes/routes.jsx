@@ -11,6 +11,7 @@ import EditCategoryDispatch from "../pages/admin/forms/formsDispatch/editCategor
 import AdminProductDispatch from "../pages/admin/adminDispatch/adminProductDispatch";
 import CreateProductDispatch from "../pages/admin/forms/formsDispatch/createProductDispatch";
 import EditProductDispatch from "../pages/admin/forms/formsDispatch/editProductDispatch";
+import Carta from "../pages/landing/carta";
 
 
 
@@ -20,8 +21,9 @@ const Views = ({ token }) => {
             <Routes>
                 <Route path="/" element={<HomeDispatch></HomeDispatch>}> </Route>
                 <Route path="/home" element={<HomeDispatch></HomeDispatch>}> </Route>
-                <Route path="/carta" element={<CartaDispatch></CartaDispatch>}></Route>
-                <Route path="/carta/comidas" element={<CartaComidasDispatch></CartaComidasDispatch>}></Route>
+                <Route path="/carta" element={<Carta></Carta>}></Route>
+                <Route path="/carta/comida" element={<CartaComidasDispatch></CartaComidasDispatch>}></Route>
+                <Route path="/carta/bebidas" element={<CartaDispatch></CartaDispatch>}></Route>
                 <Route path="/admin/login" element={<LoginDispatch></LoginDispatch>} > </Route>
                 <Route path="*" element={<Navigate to="/" replace />} > </Route>
                 {

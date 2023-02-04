@@ -1,4 +1,5 @@
 @import "../root.scss";
+
 .div-home {
     width: 100vw;
     height: auto;
@@ -13,11 +14,14 @@
         background-size: cover;
         background-repeat: no-repeat;
         background-position: 30%;
-        
+
 
         .row {
-            height: 60%;
-            margin-top: 5rem;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
 
             .presentation {
                 display: flex;
@@ -25,67 +29,58 @@
                 width: 100%;
                 height: 100%;
                 justify-content: center;
+                margin-top: -15rem;
 
                 .presentation-text {
-                    width: 70%;
+                    width: auto;
                     color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+                    height: 100%;
+                    width: 100%;
 
                     .title-presentation {
-                        letter-spacing: 0.05rem;
-                        font-size: 3rem;
-                        font-weight: 700;
-                    }
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 0.25rem;
+                        width: 100vw;
 
-                    .btn {
-                        color: white;
-                        font-size:1.85rem;
-                        margin-top: 1.35rem;
-                        padding: 1rem;
-                        border: 3px solid $golden;
-                        border-radius: 2rem;
-                        background-color: $gris;
-                    }
-                    .btn:hover {
-                        color: white;
-                        font-size:2rem;
-                        margin-top: 1.5rem;
-                        padding: 1rem;
-                        border: 3px solid $golden;
-                        border-radius: 2rem;
-                        background-color: $gris-oscuro;
-                    }
-                }
-            }
-        }
-    }
-}
+                        .line {
+                            border-bottom: 3px solid white;
+                            width: 10rem;
+                            margin: 0rem 1rem 0rem 1rem;
 
-@media screen and (max-width:1400px) {
-    .div-home {
-        .home {
-            background-position: 10%;
-            .row {
-                height: 35%;
-                .presentation {
-                    .presentation-text {
-                        .title-presentation {
-                            letter-spacing: 0.05rem;
-                            font-size: 2.5rem;
-                            font-weight: 700;
                         }
+
+                        .presentation-name {
+                            font-size: 5rem;
+                            font-weight: 800;
+
+                        }
+                    }
+
+                    .buttons-presentation {
+                        display: flex;
+                        justify-content: space-evenly;
+                        align-items: center;
+                        gap: 1rem;
+
                         .btn {
-                            margin-top: 1.15rem;
-                            font-size: 1.5rem;
-                            padding: 1rem;
-                        }
-                        .btn:hover {
                             color: white;
-                            font-size:1.75rem;
-                            margin-top: 1.35rem;
+                            font-size: 1.2rem;
                             padding: 1rem;
-                            border: 3px solid #a3743e;
+                            border: 3px solid $golden;
+                            font-weight: 800;
                             border-radius: 2rem;
-                            background-color: black;
+                            background-color: #2020209d;
+                        }
+
+                        .btn:hover {
+                            padding: 1.3rem;
+                            background-color: #202020ee;
                         }
                     }
                 }
@@ -93,54 +88,40 @@
         }
     }
 }
+
+@media screen and (max-width:1400px) {}
+
+@media screen and (max-width:1200px) {
+    .div-home {
+        .home {
+            .row {
+                .presentation {
+                    .presentation-text {
+                        .title-presentation {
+                            img {
+                                width: 50rem;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @media screen and (max-width:992px) {
+}
+
+@media screen and (max-width:756px) {
     .div-home {
-        align-items: flex-start;
         .home {
-            background-size: cover;
-            background-position: 55%;
             .row {
-                height: 100%;
                 .presentation {
-                    .presentation-text {
-                        text-align: center;
-                        .title-presentation {
-                            letter-spacing: 0.05rem;
-                            font-size: 2.5rem;
-                            font-weight: 700;
-                            margin-top: 12rem;
-                        }
-                        .btn {
-                            font-size: 2rem;
-                            margin-top: 1rem;
-                            padding: 0.5rem;
-                            
-                        }
-                    }
+                    margin-top: 0rem;
                 }
             }
         }
     }
 }
-@media screen and (max-width:480px) {
-    .div-home {
-        align-items: flex-start;
-        .home {
-            background-position: 55%;
-            height: 120vh;
-            .row {
-                height: 100%;
-                .presentation {
-                    .presentation-text {
-                        .title-presentation {
 
-                        }
-                        .btn {
-
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+@media screen and (max-width:480px) {}

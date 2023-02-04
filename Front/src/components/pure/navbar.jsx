@@ -53,12 +53,7 @@ export default function Navbar() {
                                 <li className="items" onClick={() => {
                                     navigate("../carta",)
                                 }}>
-                                    <a href="">Bebidas</a>
-                                </li>
-                                <li className="items" onClick={() => {
-                                    navigate("../carta/comidas",)
-                                }}>
-                                    <a href="">Comidas</a>
+                                    <a href="">Carta</a>
                                 </li>
                                 <li className="items" onClick={() => {
                                     navigate("../home#about",)
@@ -101,14 +96,7 @@ export default function Navbar() {
                                     onClick={() => {
                                         navigate("../carta",)
                                     }}>
-                                    <a href="">Bebidas</a>
-                                </li>
-                                <li className="items"
-                                    onClick={() => {
-                                        navigate("../carta/comidas",)
-                                    }}>
-                                    <a href="">Comidas</a>
-
+                                    <a href="">Carta</a>
                                 </li>
                                 <li className="items" onClick={() => {
                                     navigate("../home#about",)

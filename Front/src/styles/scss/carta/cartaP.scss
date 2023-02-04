@@ -1,0 +1,235 @@
+@import "../root.scss";
+.div-cartaP {
+    width: 100vw;
+    min-height: 100vh;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: 90% 40%;
+
+    .cartaHeight {
+        height: 80vh;
+        backdrop-filter: blur(5px);
+    }
+
+    .cartaP {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        gap: 2rem;
+        backdrop-filter: blur(5px);
+
+        .cartaP-title {
+            font-weight: 800;
+            font-size: 3rem;
+        }
+
+
+        .row-cartaP {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+
+
+            .col-cartaP {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 60%;
+                width: 40%;
+                border: 1px solid black;
+                background-color: aliceblue;
+                border-radius: 1.25rem ;
+
+                .col-carta-title {
+                    font-weight: 800;
+                    font-size: 3rem;
+                }
+            }
+
+            .col-cartaP:hover{
+                border: 5px solid $golden;
+            }
+
+
+            .col-comida {
+                background-size: cover;
+                background-position: 30%;
+            }
+
+            .col-bebidas {
+                background-size: cover;
+                background-position: 30%;
+            }
+        }
+    }
+}
+
+@media (max-width:1400px) {
+    .div-cartaP {
+        width: 100vw;
+        min-height: 100vh;
+        height: 100vh;
+        background-size: cover;
+        background-repeat: repeat;
+        background-position: 90% 30%;
+
+        .cartaHeight {
+            height: 80vh;
+        }
+
+        .cartaP {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            gap: 2rem;
+
+            .cartaP-title {
+                font-weight: 800;
+                font-size: 3rem;
+            }
+
+
+            .row-cartaP {
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+
+
+                .col-cartaP {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 60%;
+                    width: 45%;
+                    border: 1px solid black;
+                    background-color: aliceblue;
+
+                    .col-carta-title {
+                        font-weight: 800;
+                        font-size: 3rem;
+                    }
+                }
+
+                .col-comida {
+                    background-size: cover;
+                }
+                .col-bebidas {
+                    background-size: cover;
+                    background-position: 20%;
+                }
+            }
+        }
+    }
+
+}
+
+@media (max-width:992px) {
+    .div-cartaP {
+        width: 100vw;
+        min-height: 100vh;
+        height: 100vh;
+        background-size: cover;
+        background-repeat: repeat;
+
+        .cartaHeight {
+            height: 80vh;
+        }
+
+        .cartaP {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            gap: 2rem;
+
+            .cartaP-title {
+                font-weight: 800;
+                font-size: 3rem;
+            }
+
+
+            .row-cartaP {
+                display: flex;
+                justify-content: center;
+                gap: 2rem;
+
+
+                .col-cartaP {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 60%;
+                    width: 45%;
+                    border: 1px solid black;
+                    background-color: aliceblue;
+
+                    .col-carta-title {
+                        font-weight: 800;
+                        font-size: 3rem;
+                    }
+                }
+
+                .col-comida {
+                    background-size: cover;
+                    background-position: 40%;
+                }
+
+                .col-bebidas {
+                    background-size: cover;
+                    background-position: 20%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width:768px) {
+    .div-cartaP {
+        width: 100vw;
+        height: 100vh;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        .cartaP {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 70vh;
+
+
+            .row-cartaP {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 50%;
+                gap: 0rem;
+
+
+                .col-cartaP {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
+                    width: 80%;
+                    border: 1px solid black;
+                    background-color: aliceblue;
+                }
+
+                .col-comida {
+                    background-size: cover;
+                    background-position: 50% 80%;
+                }
+            }
+        }
+    }
+}

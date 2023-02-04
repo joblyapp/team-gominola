@@ -1,31 +1,30 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import "../../styles/scss/home/home.scss"
-import presentation from "../../resources/background-01.jpg"
-import Navbar from '../../components/pure/navbar';
+import presentation from "../../resources/background1.jpg"
 import Presentation from '../../components/containers/presentation';
-import MorePurchased from '../../components/containers/morePurchased';
+import Navbar from "../../components/pure/navbar"
 import Marcas from '../../components/containers/marcas';
 import About from '../../components/containers/about';
 import Form from '../../components/containers/form';
 import Footer from '../../components/containers/footer';
+import Hours from '../../components/containers/hours';
 
 const Home = ({ getCategories }) => {
 
-    useEffect(()=> {
+    useEffect(() => {
         getCategories()
-    },[])
+    }, [])
 
     return (
         <div className='div-home'>
-            <div className='home' id="home" style={{ backgroundImage: `url(${presentation})`, }}>
+            <div className='home' id="home" style={{ backgroundImage: `url(${presentation})`, backgroundSize: "cover" }}>
                 <Navbar></Navbar>
                 <Presentation ></Presentation>
             </div>
-            <MorePurchased></MorePurchased>
-            <Marcas></Marcas>
             <About ></About>
+            <Marcas></Marcas>
             <Form></Form>
-            <Footer></Footer>
+            <Hours></Hours>
         </div>
     );
 }

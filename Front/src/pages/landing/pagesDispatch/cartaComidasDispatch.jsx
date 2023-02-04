@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
 import { viewCategories } from "../../../redux/actions/actions"
-import Carta from "../carta"
 import CartaComidas from '../cartaComidas'
 
 const mapStateToProps = (state) => {

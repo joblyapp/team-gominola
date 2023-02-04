@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import "../../styles/scss/carta/carta.scss"
-import presentation from "../../resources/background-01.jpg"
-import NavbarHeight from '../../components/pure/navbarHeight';
+import presentation from "../../resources/fondo-carta.jpg"
+
 import SectionProduct from '../../components/containers/sectionProduct';
+import Navbar from '../../components/pure/navbar';
 
 const CartaComidas = ({ categories, getCategories }) => {
 
@@ -11,10 +12,11 @@ const CartaComidas = ({ categories, getCategories }) => {
     }, [])
 
     return (
-        <div className='div-carta'>
-            <div className='carta' id="carta" style={{ backgroundImage: `url(${presentation})`, }}>
-                <NavbarHeight></NavbarHeight>
-                <div className='carta-blur' style={{ backgroundImage: `url(${presentation})`, }}>
+        <div className='div-carta'  style={{ backgroundImage: `url(${presentation})`, }}>
+            <Navbar></Navbar>
+            <div className='carta' id="carta" >
+
+                <div className='carta-blur'>
                     <h1 className='text-center title' > ¿Qué deseas Comer? </h1>
                     <div className="row row-carta">
                         {categories
