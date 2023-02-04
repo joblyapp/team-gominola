@@ -4,8 +4,9 @@
     .hours{
         height: 100%;
         width: 100%;
-        background-position: 50%;
+        background-position: 100% 20%;
         .row{
+            background-color: #000000c0;
             .col-hours{
                 display: flex;
                 align-items: center;

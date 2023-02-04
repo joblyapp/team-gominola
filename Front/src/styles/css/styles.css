@@ -54,3 +54,11 @@ columns {
     background-color: #a3743e;
     background-image: -webkit-linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4) 50%, transparent, transparent)
 }
+
+input:-internal-autofill-selected{
+    appearance: menulist-button;
+    background-image: none !important;
+    background-color:transparent !important;
+    color: fieldtext !important;
+}
+

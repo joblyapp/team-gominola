@@ -1,12 +1,44 @@
-import React from 'react';
+import React, { cloneElement } from 'react';
 import "../../styles/scss/home/form.scss"
 import formBackground from "../../resources/background-04.jpg"
 import { useNavigate } from "react-router-dom"
-const Form = () => {
+import { Formik, Form, Field, ErrorMessage } from "formik"
+import axios from "axios"
+import * as yup from "yup"
+
+const FormContact = () => {
 
     const MY_URL = process.env.REACT_APP_MY_URL || "http://localhost:3001/api";
-    const EMAIL = process.env.REACT_APP_EMAIL || "http://localhost:3001/api";
+    const EMAIL = process.env.REACT_APP_EMAIL || "carlosjose445566@gmail.com";
     const navigate = useNavigate()
+
+    var now = new Date()
+    var minDate = now.toISOString().substring(0, 10);
+
+
+    const ContactSchema = yup.object().shape(
+        {
+            name: yup.string()
+                .required("Indicanos tú nombre para hacer la reservación"),
+            telefono: yup.string()
+                .max(10, "Ingresa un numero de telefono valido")
+                .min(10, "Ingresa un numero de telefono valido")
+                .required("Indícanos un número de teléfono para comunicarnos contigo"),
+            fecha: yup.date()
+                .required("Indícanos el día de la reservación"),
+            horario: yup.string()
+                .required("Indícanos la hora para la reservación"),
+            personas: yup.string()
+                .required("Indícanos la cantidad de persona para la reservación"),
+        })
+
+    const initialValues = {
+        name: "",
+        telefono: "",
+        fecha: "",
+        horario: "",
+        personas: "",
+    }
 
     return (
         <div className='div-form' id="form">
@@ -15,32 +47,124 @@ const Form = () => {
                     <h1 className='title-form' id="form-title">!Reserva tu mesa!</h1>
                     <div className="row form-contact">
                         <div className="col-12 col-md-6 col-form">
-                            <form action={`https://formsubmit.co/${EMAIL}`} method="POST" class="form">
-                                <h5>Nombre de orden: </h5>
-                                <input className="input-form" type="text" placeholder='Su nombre' name="name" />
-                                <h5>Telefono: </h5>
-                                <input className="input-form" type="text" placeholder='+57' name="phone" />
-                                <h5>Fecha: </h5>
-                                <input className="date-form" type="date" name="date" />
-                                <h5>Horario: </h5>
-                                <input className="date-form" type="time" min="00:00" max="23:59" name="time" />
-                                <h5>Personas: </h5>
-                                <input type="number" className="date-form" name="people" min="1" defaultValue={1} />
-                                <input type="submit" className='btn' value="Hacer mi reserva" data-bs-toggle="modal" data-bs-target="#exampleModal" />
-                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5 text-black" id="exampleModalLabel" >Gracias por hacer tu reversa</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <input type="hidden" name="_next" value={`${MY_URL}`} />
-                                <input type="hidden" name="_captcha" value="false"></input>
+                            <Formik
+                                initialValues={
+                                    initialValues
+                                }
+                                validationSchema={ContactSchema}
+                                onSubmit={async (values) => {
 
-                            </form>
+                                    axios.defaults.headers.post['Content-Type'] = 'application/json';
+                                    axios.post(`https://formsubmit.co/ajax/${EMAIL}`, {
+                                        name: values.name,
+                                        telefono: values.telefono,
+                                        fecha: values.fecha,
+                                        horario: values.horario,
+                                        personas: values.personas,
+                                    })
+                                        .then(response => console.log(response))
+                                        .catch(error => console.log(error));
+                                }}
+                            >
+                                {/** We obtain props from Formik */}
+                                {({ errors, touched, isSubmitting }) => {
+
+                                    return (
+                                        <Form className='form' action={`https://formsubmit.co/${EMAIL}`} method="POST">
+                                            <div className="field">
+                                                <Field id="name" name="name" type="text" placeholder="Nombre para la reserva" className="input-form" />
+                                                {
+                                                    errors.name && touched.name && (
+                                                        <div>
+                                                            <ErrorMessage component="p" name="name" className='text-error' ></ErrorMessage>
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                            <div className="field">
+                                                <Field id="telefono" name="telefono" type="number" placeholder="Telefono para la reserva" className="input-form" />
+                                                {
+                                                    errors.telefono && touched.telefono && (
+                                                        <div>
+                                                            <ErrorMessage component="p" name="telefono" className='text-error' ></ErrorMessage>
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                            <div className="field form-date">
+                                                <label class="form-date__label">Fecha </label>
+                                                <Field id="fecha" name="fecha" type="date" className="form-date__input" min={minDate} />
+                                                {
+                                                    errors.fecha && touched.fecha && (
+                                                        <div>
+                                                            <ErrorMessage component="p" name="fecha" className='text-error' ></ErrorMessage>
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                            <div className="field form-date">
+                                                <label class="form-date__label">Hora</label>
+                                                <Field id="horario" name="horario" type="time" className="form-date__input" />
+                                                {
+                                                    errors.horario && touched.horario && (
+                                                        <div>
+                                                            {console.log(touched.horario)}
+                                                            <ErrorMessage component="p" name="horario" className='text-error' ></ErrorMessage>
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                            <div className="field form-date">
+                                                <Field name="personas" as="select" className="form-select__input">
+                                                    <option className="option" value="1" selected>1 persona</option>
+                                                    <option className="option" value="2">2 personas</option>
+                                                    <option value="3">3 personas</option>
+                                                    <option value="4">4 personas</option>
+                                                    <option value="5">5 personas</option>
+                                                    <option value="6-10">Entre 6 y 10 personas</option>
+                                                    <option value="11-15">Entre 11 y 15 personas</option>
+                                                    <option value="16-20">Entre 16 y 20 personas</option>
+                                                    <option value="+20">Más de 20 personas</option>
+                                                </Field>
+                                                {
+                                                    errors.personas && touched.personas && (
+                                                        <div>
+                                                            <ErrorMessage component="p" name="personas" className='text-error' ></ErrorMessage>
+                                                        </div>
+                                                    )
+                                                }
+                                            </div>
+                                            <input type="submit" className='btn' value="Reservar" data-bs-toggle="modal" data-bs-target="#exampleModal" />
+                                            {errors.name || errors.telefono || errors.fecha || errors.horario || errors.personas
+                                                ?
+                                                <div className="">
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5 text-black" id="exampleModalLabel" >Te falta algun dato o algun dato esta mal, porfavor corrigelo</h1>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                :
+                                                <div className="">
+                                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5 text-black" id="exampleModalLabel">Gracias por hacer tu reserva, te esperamos</h1>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>}
+                                        </Form>)
+                                }}
+                            </Formik>
                         </div>
 
                         <div className="col-12 col-md-6 col-form">
@@ -94,4 +218,4 @@ const Form = () => {
     );
 }
 
-export default Form;
+export default FormContact;

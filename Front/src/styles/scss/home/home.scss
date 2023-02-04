@@ -69,18 +69,18 @@
                         gap: 1rem;
 
                         .btn {
-                            color: white;
+                            background-color: rgb(227 3 3 / 100%);
+                            border-radius: 20px;
+                            color: #fff;
                             font-size: 1.2rem;
-                            padding: 1rem;
-                            border: 3px solid $golden;
                             font-weight: 800;
-                            border-radius: 2rem;
-                            background-color: #2020209d;
+                            padding: 1rem;
+                            text-decoration: none;
                         }
 
                         .btn:hover {
-                            padding: 1.3rem;
-                            background-color: #202020ee;
+                            background-color: rgb(227 3 3 / 62%);
+                            transition: background-color .5s;
                         }
                     }
                 }
@@ -109,8 +109,7 @@
     }
 }
 
-@media screen and (max-width:992px) {
-}
+@media screen and (max-width:992px) {}
 
 @media screen and (max-width:756px) {
     .div-home {

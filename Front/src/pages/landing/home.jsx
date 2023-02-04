@@ -22,7 +22,6 @@ const Home = ({ getCategories }) => {
                 <Presentation ></Presentation>
             </div>
             <About ></About>
-            <Marcas></Marcas>
             <Form></Form>
             <Hours></Hours>
         </div>

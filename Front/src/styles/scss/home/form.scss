@@ -1,4 +1,5 @@
 @import "../root.scss";
+
 .div-form {
     width: 100vw;
     height: 100vh;
@@ -25,7 +26,7 @@
             .title-form {
                 margin-top: 2rem;
                 font-weight: 700;
-                text-decoration-line: underline;
+                text-decoration-line: none;
             }
 
             .form-contact {
@@ -43,18 +44,29 @@
                         align-items: flex-start;
                         width: 100%;
 
-                        h4 {
-                            margin-bottom: 0.1rem;
+                        .field {
+                            margin-bottom: 2rem;
+
+                            .input-form {
+                                width: 20rem;
+                                background-color: transparent;
+                                border: none;
+                                outline: none;
+                                border-bottom: 2px solid rgba(255, 255, 255, 0.596);
+                                color: white;
+
+                                .text-error {
+                                    p {
+                                        margin: 0;
+                                        padding: 0;
+                                    }
+                                }
+                            }
+
                         }
 
-                        .input-form {
-                            width: 20rem;
-                            background-color: transparent;
-                            border: none;
-                            outline: none;
-                            border-bottom: 2px solid rgba(255, 255, 255, 0.596);
-                            margin-bottom: 2rem;
-                            color: white;
+                        h4 {
+                            margin-bottom: 0.1rem;
                         }
 
                         input::placeholder {
@@ -62,14 +74,17 @@
                         }
 
                         .date-form {
-                            margin-bottom: 2rem;
                             outline: none;
+                            background-color: transparent;
                         }
+
+
 
                         .btn {
                             color: white;
                             border: 3px solid $golden;
                         }
+
                         .btn:hover {
                             background-color: $gris;
                             border: 3px solid $golden;
@@ -108,8 +123,9 @@
                                 font-size: 2rem;
                                 margin: 2rem;
                             }
+
                             .bi:hover {
-                                color:$golden;
+                                color: $golden;
                                 font-size: 3rem;
                                 transition: 0.5s;
                             }
@@ -119,6 +135,95 @@
             }
         }
     }
+}
+
+.form-date {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-date__label {
+    font-family: "Helvetica", arial, sans-serif;
+
+    color: #ffffff;
+}
+
+.form-date__input {
+    color: #ffffff;
+    font-family: "Helvetica", arial, sans-serif;
+    background: transparent;
+    display: inline-block;
+    visibility: visible;
+    position: relative;
+    border-bottom: 10px solid white;
+}
+
+.form-date__input:focus {
+    outline: 0;
+}
+
+.form-date__input::-webkit-calendar-picker-indicator {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: transparent;
+    background: 0 0;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    pointer-events: auto;
+}
+
+.form-date__input::-webkit-date-and-time-value {
+    margin: 0;
+}
+
+.form-date__input {
+    border: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-appearance: none;
+}
+
+
+.form-date__input::-webkit-inner-spin-button,
+.form-date__input::-webkit-outer-spin-button,
+.form-date__input::-webkit-clear-button {
+    -webkit-appearance: none;
+    display: none;
+}
+
+.form-date__input:focus {
+    outline: 0;
+}
+
+.form-select__input {
+    color: #ffffff;
+    font-family: "Helvetica", arial, sans-serif;
+    display: inline-block;
+    visibility: visible;
+    position: relative;
+    border: none;
+    background-color: transparent;
+    background: transparent;
+}
+.form-select__input select, 
+option{
+    color:rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+
+}
+.form-select__input select, 
+option:hover{
+    color:red
+}
+
+.form-select__input:focus {
+    outline: 0;
+    background-color: transparent;
 }
 
 @media screen and (max-width:768px) {

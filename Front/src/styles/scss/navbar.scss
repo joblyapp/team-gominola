@@ -65,7 +65,11 @@
         }
     }
 }
-
+a:hover{
+    text-decoration: none;
+    padding: 0;
+    color:$golden;
+}
 @media screen and (max-width:1400px) {
     .nav {
         height: 8rem;

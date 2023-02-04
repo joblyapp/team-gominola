@@ -6,7 +6,7 @@ const Hours = () => {
         <div className='div-hours'>
             <div className="hours" style={{backgroundImage:`url(${backgroundHours})`, backgroundSize:"cover"}}>
                 <div className="row">
-                    <div className="col-12 col-md-7 col-xl-9 col-hours">
+                    <div className="col-12 col-hours">
                         <h1 className='visit-title'>¡VISITANOS!</h1>
                         <h5 className='visit-day'>Lun  17.00 pm - 00.00 am</h5>
                         <h5 className='visit-day'>Mar  17.00 pm - 00.00 am</h5>
