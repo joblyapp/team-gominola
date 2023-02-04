@@ -1,4 +1,4 @@
-import React, { cloneElement } from 'react';
+import React, { useState } from 'react';
 import "../../styles/scss/home/form.scss"
 import formBackground from "../../resources/background-04.jpg"
 import { useNavigate } from "react-router-dom"
@@ -14,11 +14,12 @@ const FormContact = () => {
 
     var now = new Date()
     var minDate = now.toISOString().substring(0, 10);
-
+    const [HorarioError, setHorarioError] = useState();
 
     const ContactSchema = yup.object().shape(
         {
             name: yup.string()
+                .min(3, "Tú nombre debe tener minimo 3 caracteres")
                 .required("Indicanos tú nombre para hacer la reservación"),
             telefono: yup.string()
                 .max(10, "Ingresa un numero de telefono valido")
@@ -37,7 +38,7 @@ const FormContact = () => {
         telefono: "",
         fecha: "",
         horario: "",
-        personas: "",
+        personas: "1",
     }
 
     return (
@@ -53,17 +54,25 @@ const FormContact = () => {
                                 }
                                 validationSchema={ContactSchema}
                                 onSubmit={async (values) => {
-
-                                    axios.defaults.headers.post['Content-Type'] = 'application/json';
-                                    axios.post(`https://formsubmit.co/ajax/${EMAIL}`, {
-                                        name: values.name,
-                                        telefono: values.telefono,
-                                        fecha: values.fecha,
-                                        horario: values.horario,
-                                        personas: values.personas,
-                                    })
-                                        .then(response => console.log(response))
-                                        .catch(error => console.log(error));
+                                    const horarioPrev = values.horario
+                                    const horarioNew = horarioPrev.split(":").shift()
+                                    const horarioNumber = parseInt(horarioNew)
+                                    console.log(horarioNumber)
+                                    if (horarioNumber > 17 && horarioNumber < 24) {
+                                        setHorarioError(false)
+                                        axios.defaults.headers.post['Content-Type'] = 'application/json';
+                                        axios.post(`https://formsubmit.co/ajax/${EMAIL}`, {
+                                            name: values.name,
+                                            telefono: values.telefono,
+                                            fecha: values.fecha,
+                                            horario: values.horario,
+                                            personas: values.personas,
+                                        })
+                                            .then(response => console.log(response))
+                                            .catch(error => console.log(error));
+                                    } else {
+                                        setHorarioError(true)
+                                    }
                                 }}
                             >
                                 {/** We obtain props from Formik */}
@@ -104,14 +113,20 @@ const FormContact = () => {
                                             </div>
                                             <div className="field form-date">
                                                 <label class="form-date__label">Hora</label>
-                                                <Field id="horario" name="horario" type="time" className="form-date__input" />
+                                                <Field id="horario" name="horario" type="time" className="form-date__input" min="14:00:00" />
                                                 {
                                                     errors.horario && touched.horario && (
                                                         <div>
-                                                            {console.log(touched.horario)}
                                                             <ErrorMessage component="p" name="horario" className='text-error' ></ErrorMessage>
                                                         </div>
                                                     )
+                                                }
+                                                {
+                                                    HorarioError
+                                                        ?
+                                                        <p>El horario disponible para reservar es de 5 a 11:59 pm</p>
+                                                        :
+                                                        <></>
                                                 }
                                             </div>
                                             <div className="field form-date">
@@ -135,7 +150,7 @@ const FormContact = () => {
                                                 }
                                             </div>
                                             <input type="submit" className='btn' value="Reservar" data-bs-toggle="modal" data-bs-target="#exampleModal" />
-                                            {errors.name || errors.telefono || errors.fecha || errors.horario || errors.personas
+                                            {errors.name || errors.telefono || errors.fecha || errors.horario || errors.personas || HorarioError
                                                 ?
                                                 <div className="">
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
