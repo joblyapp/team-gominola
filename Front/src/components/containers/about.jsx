@@ -1,6 +1,5 @@
 import React from 'react';
 import "../../styles/scss/home/about.scss"
-import aboutBackground from "../../resources/background-03.jpg"
 import aboutImage from "../../resources/quienessomos.jpg"
 const About = () => {
     return (
@@ -10,7 +9,7 @@ const About = () => {
                     <div className="col-0 col-md-5 col-lg-5 col-xl-4 col-about-img">
                         <img src={aboutImage} className="img-about img-fluid" alt="" />
                     </div>
-                    <div className="col-10 col-md-7 col-lg-6 col-xl-5 col-about">
+                    <div className="col-12 col-md-7 col-lg-6 col-xl-5 col-about">
                         <div className="about-text">
                             <h1 className='about-title'>¿Quiénes Somos?</h1>
                             <p className='about-text-text'>Limes&Limones es un bar con con un espíritu jóven, donde se encuentra buena música, buena comida y buena bebida.
