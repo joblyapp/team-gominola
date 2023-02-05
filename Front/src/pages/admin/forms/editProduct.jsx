@@ -353,8 +353,6 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                                     />
                                                     {myCategory()}
                                                 </div>
-
-
                                             }
 
 
