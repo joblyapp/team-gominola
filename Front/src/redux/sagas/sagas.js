@@ -11,7 +11,7 @@ export function* watcherAPI() {
 export function* workerCategoryiesAPI (action) {
     try {
         const response = yield call(axiosHttp(action.payload.request))
-        console.log(response)
+        
         // We Obtain the token from response
         yield put({
             type: action.payload.okAction, // API_CALL_SUCCESS

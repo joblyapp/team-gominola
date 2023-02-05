@@ -65,20 +65,20 @@ const CreateCategory = ({ token }) => {
     }
 
     const createStorage = async (values) => {
-        console.log(values.products)
+      
         if (file !== null) {
             const formData = new FormData()
             formData.append("myfile", file)
             const peticion = axios.post(`${API_URL}/storage/`, formData, configForm(token))
             peticion.then((res) => {
                 let isFood;
-                console.log(values.isFood)
+
                 if (values.isFood === "bebida") {
                     isFood = false;
                 } else {
                     isFood = true;
                 }
-                console.log(isFood)
+
                 const body = {
                     "name": values.name,
                     "isFood": isFood,
@@ -93,7 +93,7 @@ const CreateCategory = ({ token }) => {
                         }, 1000)
                     })
                     .catch((e) => {
-                        console.log(e)
+                       
                         setError(true)
                     })
             })

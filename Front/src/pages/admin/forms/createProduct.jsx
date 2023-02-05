@@ -60,7 +60,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
 
 
     const createStorage = async (values) => {
-        console.log(values.products)
+        
         if (file !== null) {
             const formData = new FormData()
             formData.append("myfile", file)
@@ -76,28 +76,27 @@ const CreateProduct = ({ token, categories, getCategories }) => {
                 axios.post(`${API_URL}/product/`, body, config(token))
                     .then((res) => {
                         setSubmitting(true)
-                        console.log(res.data._id)
+                        
                         let productIdd = res.data._id
 
                         if (values.category) {
                             setSubmitting(false)
                             axios.get(`${API_URL}/category/${values.category}`, configSimple(token))
                                 .then((res) => {
-                                    console.log(res.data)
-                                    console.log(productIdd)
+
                                     let productsCategory = []
                                     if (res.data.products) {
                                         res.data.products.map((product) => {
                                             productsCategory.push(product._id)
                                         })
-                                        console.log(productsCategory)
+                                      
                                         const body = {
                                             "name": res.data.name,
                                             "isFood": res.data.isFood,
                                             "products": [...productsCategory, productIdd],
                                             "imageId": res.data.imageId._id,
                                         }
-                                        console.log(values.category)
+                                       
                                         axios.put(`${API_URL}/category/${values.category}`, body, config(token))
                                             .then((res) => {
                                                 setSubmitting(true)
@@ -107,7 +106,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
                                                 
                                             })
                                             .catch((e) => {
-                                                console.log(e)
+                                              
                                                 setError(true)
                                             })
                                     }
@@ -122,7 +121,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
                         }
                     })
                     .catch((e) => {
-                        console.log(e)
+                        
                         setError(true)
                     })
             })

@@ -27,7 +27,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
     const [product, setProduct] = useState()
     const [errorProduct, setErrorProduct] = useState()
     const [category, setCategory] = useState(defaultSelections)
-    const [lastCategory, setLastCategory] = useState(defaultSelections)
+    const [lastCategory, setLastCategory] = useState()
 
     useEffect(() => {
         getProduct()
@@ -114,25 +114,26 @@ const EditProduct = ({ token, categories, getCategories }) => {
                 axios.put(`${API_URL}/product/${id}`, body, config(token))
                     .then((res) => {
                         setSubmitting(true)
+                        console.log(values.category)
                         if (values.category) {
                             setSubmitting(false)
                             axios.get(`${API_URL}/category/${values.category}`, configSimple(token))
                                 .then((res) => {
-                                    console.log(res.data)
+
                                     let productsCategory = []
                                     if (res.data.products) {
                                         res.data.products.map((product) => {
                                             productsCategory.push(product._id)
                                         })
-                                        console.log(productsCategory)
+
                                         const body = {
                                             "name": res.data.name,
                                             "isFood": res.data.isFood,
                                             "products": [...productsCategory, id],
                                             "imageId": res.data.imageId._id,
                                         }
-                                        console.log(values.category)
-                                        axios.put(`${API_URL}/category/${values.category}`, body, config(token))
+
+                                        axios.put(`${API_URL}/category/${values.category}`, body, configSimple(token))
                                             .then((res) => {
                                                 setSubmitting(true)
                                                 setTimeout(() => {
@@ -141,33 +142,32 @@ const EditProduct = ({ token, categories, getCategories }) => {
 
                                             })
                                             .catch((e) => {
-                                                console.log(e)
+
                                                 setError(true)
                                             })
 
-                                        const newProducts = lastCategory.products.filter((item) => item == product._id)
+                                        if (category) {
+                                            const newProducts = lastCategory.products.filter((item) => item == product._id)
+                                            const bodyLastCategory = {
+                                                "name": lastCategory.name,
+                                                "isFood": lastCategory.isFood,
+                                                "products": newProducts,
+                                                "imageId": lastCategory.imageId._id,
+                                            }
+                                            axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
+                                                .then((res) => {
+                                                    setSubmitting(true)
 
-                                        const bodyLastCategory = {
-                                            "name": lastCategory.name,
-                                            "isFood": lastCategory.isFood,
-                                            "products": newProducts,
-                                            "imageId": lastCategory.imageId._id,
+                                                    setTimeout(() => {
+                                                        navigate("../admin/productos")
+                                                    }, 1000)
+
+                                                })
+                                                .catch((e) => {
+
+                                                    setError(true)
+                                                })
                                         }
-                                        console.log(newProducts)
-
-                                        axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
-                                            .then((res) => {
-                                                setSubmitting(true)
-                                                console.log(res)
-                                                setTimeout(() => {
-                                                    navigate("../admin/productos")
-                                                }, 1000)
-
-                                            })
-                                            .catch((e) => {
-                                                console.log(e)
-                                                setError(true)
-                                            })
                                     }
                                 }).catch((e) => {
                                     setError(true)
@@ -180,12 +180,12 @@ const EditProduct = ({ token, categories, getCategories }) => {
                         }
                     })
                     .catch((e) => {
-                        console.log(e)
+
                         setError(true)
                     })
             })
         } else {
-            console.log(product.imageId._id)
+
             body = {
                 "name": values.name,
                 "description": values.description,
@@ -195,25 +195,27 @@ const EditProduct = ({ token, categories, getCategories }) => {
             axios.put(`${API_URL}/product/${id}`, body, config(token))
                 .then((res) => {
                     setSubmitting(true)
+                    console.log(values.category)
+
                     if (values.category) {
                         setSubmitting(false)
                         axios.get(`${API_URL}/category/${values.category}`, configSimple(token))
                             .then((res) => {
-                                console.log(res.data)
+
                                 let productsCategory = []
                                 if (res.data.products) {
                                     res.data.products.map((product) => {
                                         productsCategory.push(product._id)
                                     })
-                                    console.log(productsCategory)
+
                                     const body = {
                                         "name": res.data.name,
                                         "isFood": res.data.isFood,
                                         "products": [...productsCategory, id],
                                         "imageId": res.data.imageId._id,
                                     }
-                                    console.log(values.category)
-                                    axios.put(`${API_URL}/category/${values.category}`, body, config(token))
+
+                                    axios.put(`${API_URL}/category/${values.category}`, body, configSimple(token))
                                         .then((res) => {
                                             setSubmitting(true)
                                             setTimeout(() => {
@@ -222,46 +224,50 @@ const EditProduct = ({ token, categories, getCategories }) => {
 
                                         })
                                         .catch((e) => {
-                                            console.log(e)
                                             setError(true)
                                         })
 
-                                    const newProducts = lastCategory.products.filter((item) => item == product._id)
+                                    if (category) {
+                                        const newProducts = lastCategory.products.filter((item) => item == product._id)
 
-                                    const bodyLastCategory = {
-                                        "name": lastCategory.name,
-                                        "isFood": lastCategory.isFood,
-                                        "products": newProducts,
-                                        "imageId": lastCategory.imageId._id,
+                                        const bodyLastCategory = {
+                                            "name": lastCategory.name,
+                                            "isFood": lastCategory.isFood,
+                                            "products": newProducts,
+                                            "imageId": lastCategory.imageId._id,
+                                        }
+
+
+                                        axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
+                                            .then((res) => {
+                                                setSubmitting(true)
+
+                                                setTimeout(() => {
+                                                    navigate("../admin/productos")
+                                                }, 1000)
+
+                                            })
+                                            .catch((e) => {
+                                                console.log(e)
+
+                                                setError(true)
+                                            })
                                     }
-                                    console.log(newProducts)
-
-                                    axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
-                                        .then((res) => {
-                                            setSubmitting(true)
-                                            console.log(res)
-                                            setTimeout(() => {
-                                                navigate("../admin/productos")
-                                            }, 1000)
-
-                                        })
-                                        .catch((e) => {
-                                            console.log(e)
-                                            setError(true)
-                                        })
                                 }
                             }).catch((e) => {
+
                                 setError(true)
                             })
                     } else {
                         setSubmitting(true)
+
                         setTimeout(() => {
                             navigate("../admin/productos")
                         }, 1000)
                     }
                 })
                 .catch((e) => {
-                    console.log(e)
+
                     setError(true)
                 })
         }
@@ -349,7 +355,6 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                                         isMulti={false}
                                                         component={MultiSelectEdit2}
                                                         options={categoriesSelections}
-                                                        optionsDefault={{ value: "x" }}
                                                     />
                                                     {myCategory()}
                                                 </div>

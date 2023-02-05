@@ -12,7 +12,6 @@ const AdminCategories = ({ categories, getCategories, token }) => {
 
     useEffect(() => {
         getCategories()
-        console.log(process.env.REACT_APP_API_URL)
     }, [])
 
     const navigate = useNavigate()

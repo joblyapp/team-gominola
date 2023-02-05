@@ -67,8 +67,6 @@ const FormContact = () => {
                                             horario: values.horario,
                                             personas: values.personas,
                                         })
-                                            .then(response => console.log(response))
-                                            .catch(error => console.log(error));
                                     } else {
                                         setHorarioError(true)
                                     }

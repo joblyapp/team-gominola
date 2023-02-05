@@ -10,8 +10,14 @@ const MultiSelectEdit2 = ({ field, optionsDefault, form, options, isMulti = fals
     }
 
     useEffect(() => {
-        form.setFieldValue(field.name, optionsDefault.value)
+        compare()
     }, [])
+
+    const compare = () =>{
+        if (optionsDefault){
+            form.setFieldValue(field.name, optionsDefault.value)
+        }
+    }
 
     const getValue = () => {
         if (options) {

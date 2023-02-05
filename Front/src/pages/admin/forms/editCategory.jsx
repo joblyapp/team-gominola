@@ -104,20 +104,19 @@ const EditCategory = ({ token, categories, getCategories }) => {
                     </div>)
             })
         })
-        console.log(defaultSelections)
-        console.log(categorySelect.products)
+       
     }
     
     let body = {}
     const createStorage = async (values) => {
-        console.log(values.products)
+       
         if (file !== null) {
             const formData = new FormData()
             formData.append("myfile", file)
             const peticion = axios.post(`${API_URL}/storage/`, formData, configForm(token))
             peticion.then((res) => {
                 let isFood;
-                console.log(values.isFood)
+               
                 if (values.isFood === "bebida") {
                     isFood = false;
                 } else {
@@ -137,13 +136,13 @@ const EditCategory = ({ token, categories, getCategories }) => {
                         }, 1000)
                     })
                     .catch((e) => {
-                        console.log(e)
+                        
                         setError(true)
                     })
             })
         } else {
             let isFood;
-            console.log(values.isFood)
+         
             if (values.isFood === "bebida") {
                 isFood = false;
             } else {
@@ -163,7 +162,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
                     }, 1000)
                 })
                 .catch((e) => {
-                    console.log(e)
+                    
                     setError(true)
                 })
         }
