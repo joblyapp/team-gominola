@@ -7,12 +7,18 @@ import axios from "axios"
 import previewImage from "../../../resources/admin/preview.jpg"
 import { useNavigate } from 'react-router-dom';
 import NavbarAdmin from "../../../components/pure/navbarAdmin"
-
-const CreateProduct = ({ token }) => {
+import backgroundImage from "../../../resources/background1.jpg"
+import MultiSelect from './formsDispatch/multiSelect';
+import { configSimple } from '../../../utils/axios';
+const CreateProduct = ({ token, categories, getCategories }) => {
 
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001/api";
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        getCategories()
+    }, []);
 
     const [error, setError] = useState(false);
     const [errorImage, setErrorImage] = useState(false);
@@ -23,16 +29,35 @@ const CreateProduct = ({ token }) => {
     const productSchema = yup.object().shape(
         {
             name: yup.string().required("Ponle un nombre al producto"),
-            description: yup.string().max(200,"La descripción de un producto debe ser de maximo 200 caracteres"),
-            price: yup.number().required().max(10000000,"El precio maximo de un producto puede ser 10000000"),
+            description: yup.string().max(200, "La descripción de un producto debe ser de maximo 200 caracteres"),
+            price: yup.number().required().max(10000000, "El precio maximo de un producto puede ser 10000000"),
+            category: yup.string()
         }
     )
 
     const initialValues = {
         name: "",
-        description:"",
-        price:"00.00"
+        description: "",
+        price: "00.00",
+        categories: categories
     }
+
+    let categoriesSelections = []
+
+    if (categories) {
+        categories.map((product) => {
+            categoriesSelections.push({
+                value: product._id,
+                label:
+                    (<div>
+                        <h6 style={{ color: "black" }}>{product.name} <img style={{ width: "2rem", height: "2rem" }} src={product.imageId.url} alt="Not Found" /></h6>
+                    </div>)
+            })
+        })
+    }
+
+
+
 
     const createStorage = async (values) => {
         console.log(values.products)
@@ -41,6 +66,7 @@ const CreateProduct = ({ token }) => {
             formData.append("myfile", file)
             const peticion = axios.post(`${API_URL}/storage/`, formData, configForm(token))
             peticion.then((res) => {
+
                 const body = {
                     "name": values.name,
                     "description": values.description,
@@ -50,9 +76,50 @@ const CreateProduct = ({ token }) => {
                 axios.post(`${API_URL}/product/`, body, config(token))
                     .then((res) => {
                         setSubmitting(true)
-                        setTimeout(() => {
-                            navigate("../admin/productos")
-                        }, 1000)
+                        console.log(res.data._id)
+                        let productIdd = res.data._id
+
+                        if (values.category) {
+                            setSubmitting(false)
+                            axios.get(`${API_URL}/category/${values.category}`, configSimple(token))
+                                .then((res) => {
+                                    console.log(res.data)
+                                    console.log(productIdd)
+                                    let productsCategory = []
+                                    if (res.data.products) {
+                                        res.data.products.map((product) => {
+                                            productsCategory.push(product._id)
+                                        })
+                                        console.log(productsCategory)
+                                        const body = {
+                                            "name": res.data.name,
+                                            "isFood": res.data.isFood,
+                                            "products": [...productsCategory, productIdd],
+                                            "imageId": res.data.imageId._id,
+                                        }
+                                        console.log(values.category)
+                                        axios.put(`${API_URL}/category/${values.category}`, body, config(token))
+                                            .then((res) => {
+                                                setSubmitting(true)
+                                                setTimeout(() => {
+                                                    navigate("../admin/productos")
+                                                }, 1000)
+                                                
+                                            })
+                                            .catch((e) => {
+                                                console.log(e)
+                                                setError(true)
+                                            })
+                                    }
+                                }).catch((e) => {
+                                    setError(true)
+                                })
+                        } else {
+                            setSubmitting(true)
+                            setTimeout(() => {
+                                navigate("../admin/productos")
+                            }, 1000)
+                        }
                     })
                     .catch((e) => {
                         console.log(e)
@@ -65,29 +132,12 @@ const CreateProduct = ({ token }) => {
     }
 
     return (
-        <div className='createCategory'>
+        <div className='createCategory' style={{ backgroundImage: `url(${backgroundImage})` }}>
             <div className="navbarCreateCategory">
                 <NavbarAdmin></NavbarAdmin>
             </div>
             <h2 className='createCTitle'>Ingresa los datos para crear tu categoria</h2>
             <div className='forms'>
-                <h2 className='createCTitle'>Foto del producto</h2>
-                <form action="" className='form-edit-image'>
-                    <input
-                        filename={file}
-                        onChange={e => {
-                            setFile(e.target.files[0])
-                            setPreview(URL.createObjectURL(e.target.files[0]))
-                        }}
-                        type="file"
-                        accept="image/*"
-                        className='form-control'
-                    >
-                    </input>
-                    <div className='preview'>
-                        {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
-                    </div>
-                </form>
 
                 <Formik
                     initialValues={
@@ -111,15 +161,26 @@ const CreateProduct = ({ token }) => {
                                         </div>
                                     )
                                 }
-                                <Field id="description" name="description" type="text" placeholder="Descripcion del producto" className="form-control" />
-                                {
-                                    errors.description && touched.description && (
-                                        <div>
-                                            <ErrorMessage component="p" name="description" className='text-error' ></ErrorMessage>
-                                        </div>
-                                    )
-                                }
-                                <Field id="price" name="price" type="number" step="0.1"  min="0" placeholder="precio del producto" className="form-control" />
+
+                                <h2 className=''>Foto del producto</h2>
+                                <form action="" className='form-edit-image'>
+                                    <input
+                                        filename={file}
+                                        onChange={e => {
+                                            setFile(e.target.files[0])
+                                            setPreview(URL.createObjectURL(e.target.files[0]))
+                                        }}
+                                        type="file"
+                                        accept="image/*"
+                                        className='form-control'
+                                    >
+                                    </input>
+                                    <div className='preview m-2'>
+                                        {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
+                                    </div>
+                                </form>
+
+                                <Field id="price" name="price" type="number" step="0.1" min="0" placeholder="precio del producto" className="form-control" />
                                 {
                                     errors.price && touched.price && (
                                         <div>
@@ -127,10 +188,30 @@ const CreateProduct = ({ token }) => {
                                         </div>
                                     )
                                 }
+
+                                <Field
+                                    name="category"
+                                    id="category"
+                                    placeholder="Selecciona la categoria para este producto"
+                                    isMulti={false}
+                                    component={MultiSelect}
+                                    options={categoriesSelections}
+                                />
+
+                                <Field id="description" name="description" as="textarea" placeholder="Descripcion del producto" className="form-control" />
+                                {
+                                    errors.description && touched.description && (
+                                        <div>
+                                            <ErrorMessage component="p" name="description" className='text-error' ></ErrorMessage>
+                                        </div>
+                                    )
+                                }
+                                {submitting ? (<h5 style={{ color: "white" }}>Creando Producto</h5>) : null}
+                                {errorImage ? (<h5 style={{ color: "red" }}>El producto debe tener una imagen</h5>) : <></>}
+                                {error ? (<h5 style={{ color: "red" }}>Opps, hubo un error</h5>) : <></>}
+
                                 <button type="submit" className='btn btn-dark'>Crear Producto</button>
-                                {submitting ? (<p style={{ color: "black" }}>Creando Producto</p>) : null}
-                                {errorImage ? (<p style={{ color: "red" }}>El producto debe tener una imagen</p>) : <></>}
-                                {error ? (<p style={{ color: "red" }}>Opps, hubo un error</p>) : <></>}
+
                             </Form>)
                     }}
                 </Formik>

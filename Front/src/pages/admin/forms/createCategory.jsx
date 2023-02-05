@@ -8,6 +8,7 @@ import previewImage from "../../../resources/admin/preview.jpg"
 import MultiSelect from './formsDispatch/multiSelect';
 import { useNavigate } from 'react-router-dom';
 import NavbarAdmin from "../../../components/pure/navbarAdmin"
+import backgroundImage from "../../../resources/background1.jpg"
 
 const CreateCategory = ({ token }) => {
 
@@ -24,7 +25,7 @@ const CreateCategory = ({ token }) => {
     const categorySchema = yup.object().shape(
         {
             name: yup.string().required("Ponle un nombre a la categoria"),
-            isFood: yup.boolean(),
+            isFood: yup.string().required(),
             products: yup.array()
         })
 
@@ -48,6 +49,7 @@ const CreateCategory = ({ token }) => {
                 setError(error)
             })
     }
+    
     let productSelections = []
 
     if (products) {
@@ -69,17 +71,20 @@ const CreateCategory = ({ token }) => {
             formData.append("myfile", file)
             const peticion = axios.post(`${API_URL}/storage/`, formData, configForm(token))
             peticion.then((res) => {
-                const formData = new FormData()
+                let isFood;
+                console.log(values.isFood)
+                if (values.isFood === "bebida") {
+                    isFood = false;
+                } else {
+                    isFood = true;
+                }
+                console.log(isFood)
                 const body = {
                     "name": values.name,
-                    "isFood": values.isFood,
+                    "isFood": isFood,
                     "products": values.products,
                     "imageId": res.data._id
                 }
-                formData.append("name", values.name)
-                formData.append("isFood", values.isFood)
-                formData.append("products", values.products)
-                formData.append("imageId", res.data._id)
                 axios.post(`${API_URL}/category/`, body, config(token))
                     .then((res) => {
                         setSubmitting(true)
@@ -98,29 +103,13 @@ const CreateCategory = ({ token }) => {
     }
 
     return (
-        <div className='createCategory'>
+        <div className='createCategory' style={{ backgroundImage: `url(${backgroundImage})` }}>
             <div className="navbarCreateCategory">
                 <NavbarAdmin></NavbarAdmin>
             </div>
-            <h2 className='createCTitle'>Ingresa los datos para crear tu categoria</h2>
+            <h2 className='createCTitle'>Ingresa los datos para crear la categoria</h2>
             <div className='forms'>
-                <h2 className='createCTitle'>Icono de la categoria</h2>
-                <form action="" className='form-edit-image'>
-                    <input
-                        filename={file}
-                        onChange={e => {
-                            setFile(e.target.files[0])
-                            setPreview(URL.createObjectURL(e.target.files[0]))
-                        }}
-                        type="file"
-                        accept="image/*"
-                        className='form-control'
-                    >
-                    </input>
-                    <div className='preview'>
-                        {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
-                    </div>
-                </form>
+                <h2 className=''>Icono de la categoria</h2>
 
                 <Formik
                     initialValues={
@@ -138,6 +127,7 @@ const CreateCategory = ({ token }) => {
                             <Form className='form-form'>
 
 
+
                                 <Field id="name" name="name" type="text" placeholder="Nombre de la categoria" className="form-control" />
                                 {
                                     errors.name && touched.name && (
@@ -147,18 +137,36 @@ const CreateCategory = ({ token }) => {
                                     )
                                 }
 
-                                <div className="check">
-                                    <label class="form-check-label" htmlFor="isFood">
-                                        Es comida?
+                                <form action="" className='form-edit-image'>
+                                    <input
+                                        filename={file}
+                                        onChange={e => {
+                                            setFile(e.target.files[0])
+                                            setPreview(URL.createObjectURL(e.target.files[0]))
+                                        }}
+                                        type="file"
+                                        accept="image/*"
+                                        className='form-control'
+                                    >
+                                    </input>
+                                    <div className='preview m-3'>
+                                        {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
+                                    </div>
+                                </form>
+                                
+                                <div class="check">
+                                    <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios1" value="comida" checked />
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Comida
                                     </label>
-                                    <Field
-                                        id="isFood"
-                                        name="isFood"
-                                        placeholder="isFood"
-                                        type="checkbox"
-                                        className="form-check-input"
-                                    />
                                 </div>
+                                <div class="check">
+                                    <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="bebida" />
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Bebida
+                                    </label>
+                                </div>
+
                                 <Field
                                     name="products"
                                     id="products"
@@ -175,10 +183,10 @@ const CreateCategory = ({ token }) => {
                                         </div>
                                     )
                                 }
+                                {submitting ? (<h5 style={{ color: "white" }}>Creando Categoria</h5>) : null}
+                                {errorImage ? (<h5 style={{ color: "red" }}>La categoria debe tener una imagen</h5>) : <></>}
+                                {error ? (<h5 style={{ color: "red" }}>Opps, hubo un error</h5>) : <></>}
                                 <button type="submit" className='btn btn-dark'>Crear categoria</button>
-                                {submitting ? (<p style={{ color: "black" }}>Creando Categoria</p>) : null}
-                                {errorImage ? (<p style={{ color: "red" }}>La categoria debe tener una imagen</p>) : <></>}
-                                {error ? (<p style={{ color: "red" }}>Opps, hubo un error</p>) : <></>}
                             </Form>)
                     }}
                 </Formik>

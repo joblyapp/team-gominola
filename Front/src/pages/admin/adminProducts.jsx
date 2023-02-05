@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import NavbarAdmin from '../../components/pure/navbarAdmin';
 import "../../styles/scss/admin/categories.scss"
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 import { config } from '../../utils/axios';
 import NavbarAdminDispatch from '../../components/pure/navbarAdminDispatch';
-
-const AdminProducts = ({ token }) => {
+import backgroundImage from "../../resources/background1.jpg"
+const AdminProducts = ({ token,getCategories }) => {
 
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001/api";
 
@@ -14,6 +13,7 @@ const AdminProducts = ({ token }) => {
 
     useEffect(() => {
         getProducts()
+        getCategories()
     }, [])
 
     const navigate = useNavigate()
@@ -32,36 +32,36 @@ const AdminProducts = ({ token }) => {
     }
 
     return (
-        <div className='div-admin'>
+        <div className='div-admin' style={{ backgroundImage:`url(${backgroundImage})`}}>
             <NavbarAdminDispatch></NavbarAdminDispatch>
             <div className="container">
                 <div className='section-title'>
-                    <h3>Tus Products</h3>
+                    <h3>Productos</h3>
                     <button className='btn btn-light' onClick={() => {
                         navigate(`../admin/crear/producto/`)
                     }}> Crear Producto</button>
                 </div>
                 <div className="admin-categories">
-                    <div className="row">
+                    <div className="row row-categories-admin">
                         {products
                             ?
                             products.map((product) => {
                                 return ((
-                                    <div className="categories col-12 col-md-6 col-xl-4">
+                                    <div className="categories col-12 col-md-5 col-xxl-3">
                                         <div>
                                             <p style={{ fontSize: "2rem" }} >{product.name}  ${product.price.$numberDecimal} </p>
                                         </div>
-                                        <img style={{ width: "15rem", height: "15rem" }} src={product.imageId.url} alt="" />
+                                        <img className='img-product' src={product.imageId.url} alt="" />
                                         <div className='categories-buttons'>
                                             <button className='btn btn-light' onClick={() => {
                                                 navigate(`../admin/editar/producto/${product._id}`)
-                                            }}> Editar Producto</button>
+                                            }}> Editar</button>
                                             <button className='btn btn-danger' onClick={() => {
                                                 axios.delete(`${API_URL}/product/${product._id}`, config(token))
                                                 setTimeout(() => {
                                                     reload()
                                                 }, 1500)
-                                            }} > Eliminar Producto </button>
+                                            }} > Eliminar</button>
 
                                         </div>
                                     </div>

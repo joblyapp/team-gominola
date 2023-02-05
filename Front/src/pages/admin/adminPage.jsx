@@ -3,14 +3,14 @@ import "../../styles/scss/admin/admin.scss"
 import categoriesImage from "../../resources/categories.png"
 import productsImage from "../../resources/products.png"
 import { useNavigate } from 'react-router-dom';
-import NavbarAdmin from '../../components/pure/navbarAdmin';
 import NavbarAdminDispatch from '../../components/pure/navbarAdminDispatch';
+import backgroundImage from "../../resources/background1.jpg"
 const AdminPage = () => {
 
     const navigate = useNavigate();
 
     return (
-        <div className='admin'>
+        <div className='admin' style={{ backgroundImage:`url(${backgroundImage})`}}>
             <NavbarAdminDispatch></NavbarAdminDispatch>
             <div className="title">
                 <h2 className='admin-title'>Panel de administracion Limes y limones</h2>

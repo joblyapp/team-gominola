@@ -4,6 +4,7 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+    background-size: cover;
     .title{
         margin-top: 5rem;
         .admin-title {
@@ -17,6 +18,7 @@
         justify-content: center;
         align-items: center;
         margin-top: 1rem;
+        gap:1rem;
 
         .col-admin {
             padding: 2rem;
@@ -34,19 +36,11 @@
             }
         }
         .col-admin:hover {
-            padding: 2rem;
-            border: 2px solid black;
-            border-radius: 1rem;
-            max-width: 22rem;
-            max-height: 22rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            background-color: rgb(255, 255, 255);
-
+            background-color: antiquewhite;
+            
             h1 {
                 color: black;
+                font-size: 2rem;
             }
         }
     }

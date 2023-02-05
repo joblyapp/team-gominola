@@ -36,7 +36,7 @@ const SectionProduct = ({ category }) => {
                                         {key === 0
                                             ?
                                             <div>
-                                                <button class="nav-link active div-product" id={`${product._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}`} aria-selected="true">
+                                                <button class="nav-link active div-product" id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
                                                     <div className="title-product">
                                                         <div className='titleP'>
                                                             <img src={category.imageId.url} alt="x" />
@@ -51,14 +51,14 @@ const SectionProduct = ({ category }) => {
                                                     </div>
                                                 </button>
                                                 <div class="tab-content" id={`v-pills${category.name}`}>
-                                                    <div class="tab-pane fade show active " id={`v-pills-${product._id}`} role="tabpanel" aria-labelledby={`${product._id}`} tabIndex="0">
+                                                    <div class="tab-pane fade show active " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
                                                         <img src={product.imageId.url} alt="" />
                                                     </div>
                                                 </div>
                                             </div>
                                             :
                                             <div>
-                                                <button class="nav-link  div-product" id={`${product._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}`} aria-selected="true">
+                                                <button class="nav-link  div-product" id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
                                                     <div className="title-product">
                                                         <div className='titleP'>
                                                             <img src={category.imageId.url} alt="x" />
@@ -73,7 +73,7 @@ const SectionProduct = ({ category }) => {
                                                     </div>
                                                 </button>
                                                 <div class="tab-content" id={`v-pills${category.name}`}>
-                                                    <div class="tab-pane fade " id={`v-pills-${product._id}`} role="tabpanel" aria-labelledby={`${product._id}`} tabIndex="0">
+                                                    <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
                                                         <img src={product.imageId.url} alt="" />
                                                     </div>
                                                 </div>
@@ -99,7 +99,7 @@ const SectionProduct = ({ category }) => {
                                             <div>
                                                 {key === 0
                                                     ?
-                                                    <button class="nav-link active div-product" id={`${product._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}`} aria-selected="true">
+                                                    <button class="nav-link active div-product" id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
                                                         <div className="title-product">
                                                             <div className='titleP'>
                                                                 <img src={category.imageId.url} alt="x" />
@@ -114,7 +114,7 @@ const SectionProduct = ({ category }) => {
                                                         </div>
                                                     </button>
                                                     :
-                                                    <button class="nav-link  div-product" id={`${product._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}`} aria-selected="true">
+                                                    <button class="nav-link  div-product" id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
                                                         <div className="title-product">
                                                             <div className='titleP'>
                                                                 <img src={category.imageId.url} alt="x" />
@@ -145,13 +145,13 @@ const SectionProduct = ({ category }) => {
                                             {key === 0
                                                 ?
                                                 <div class="tab-content" id={`v-pills${category.name}`}>
-                                                    <div class="tab-pane fade show active " id={`v-pills-${product._id}`} role="tabpanel" aria-labelledby={`${product._id}`} tabIndex="0">
+                                                    <div class="tab-pane fade show active " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
                                                         <img src={product.imageId.url} alt="" />
                                                     </div>
                                                 </div>
                                                 :
                                                 <div class="tab-content" id={`v-pills${category.name}`}>
-                                                    <div class="tab-pane fade " id={`v-pills-${product._id}`} role="tabpanel" aria-labelledby={`${product._id}`} tabIndex="0">
+                                                    <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
                                                         <img src={product.imageId.url} alt="" />
                                                     </div>
                                                 </div>

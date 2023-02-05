@@ -8,6 +8,7 @@ import previewImage from "../../../resources/admin/preview.jpg"
 import MultiSelectEdit from './formsDispatch/multiSelectEdit';
 import { useNavigate, useParams } from 'react-router-dom';
 import NavbarAdmin from "../../../components/pure/navbarAdmin"
+import backgroundImage from "../../../resources/background1.jpg"
 
 const EditCategory = ({ token, categories, getCategories }) => {
 
@@ -19,7 +20,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
         getProducts()
     }, [])
 
-    
+
 
     const [error, setError] = useState(false);
     const [errorImage, setErrorImage] = useState(false);
@@ -45,7 +46,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
     const categorySchema = yup.object().shape(
         {
             name: yup.string().required("Ponle un nombre a la categoria"),
-            isFood: yup.boolean(),
+            isFood: yup.string().required(),
             products: yup.array()
         })
 
@@ -98,7 +99,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
             defaultSelections.push({
                 value: product._id,
                 label:
-                    (<div style={{display:"flex"}}>
+                    (<div style={{ display: "flex" }}>
                         <h6 style={{ color: "black" }}>{product.name} <img style={{ width: "2rem", height: "2rem" }} src={product.imageId.url} alt="Not Found" /></h6>
                     </div>)
             })
@@ -106,6 +107,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
         console.log(defaultSelections)
         console.log(categorySelect.products)
     }
+    
     let body = {}
     const createStorage = async (values) => {
         console.log(values.products)
@@ -114,9 +116,16 @@ const EditCategory = ({ token, categories, getCategories }) => {
             formData.append("myfile", file)
             const peticion = axios.post(`${API_URL}/storage/`, formData, configForm(token))
             peticion.then((res) => {
+                let isFood;
+                console.log(values.isFood)
+                if (values.isFood === "bebida") {
+                    isFood = false;
+                } else {
+                    isFood = true;
+                }
                 body = {
                     "name": values.name,
-                    "isFood": values.isFood,
+                    "isFood": isFood,
                     "products": values.products,
                     "imageId": res.data._id
                 }
@@ -133,10 +142,16 @@ const EditCategory = ({ token, categories, getCategories }) => {
                     })
             })
         } else {
-            console.log(categorySelect.imageId._id)
+            let isFood;
+            console.log(values.isFood)
+            if (values.isFood === "bebida") {
+                isFood = false;
+            } else {
+                isFood = true;
+            }
             body = {
                 "name": values.name,
-                "isFood": values.isFood,
+                "isFood": isFood,
                 "products": values.products,
                 "imageId": categorySelect.imageId._id
             }
@@ -155,7 +170,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
     }
 
     return (
-        <div className='createCategory'>
+        <div className='createCategory' style={{ backgroundImage: `url(${backgroundImage})` }}>
             {
                 categorySelect
                     ?
@@ -165,23 +180,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
                         </div>
                         <h2 className='createCTitle'>Ingresa los datos para editar tu categoria</h2>
                         <div className='forms'>
-                            <h2 className='createCTitle'>Icono de la categoria</h2>
-                            <form action="" className='form-edit-image'>
-                                <input
-                                    filename={file}
-                                    onChange={e => {
-                                        setFile(e.target.files[0])
-                                        setPreview(URL.createObjectURL(e.target.files[0]))
-                                    }}
-                                    type="file"
-                                    accept="image/*"
-                                    className='form-control'
-                                >
-                                </input>
-                                <div className='preview'>
-                                    {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
-                                </div>
-                            </form>
+                            <h2 className=''>Icono de la categoria</h2>
 
                             <Formik
                                 initialValues={
@@ -208,17 +207,46 @@ const EditCategory = ({ token, categories, getCategories }) => {
                                                 )
                                             }
 
-                                            <div className="check">
-                                                <label class="form-check-label" htmlFor="isFood">
-                                                    Es comida?
+                                            <form action="" className='form-edit-image'>
+                                                <input
+                                                    filename={file}
+                                                    onChange={e => {
+                                                        setFile(e.target.files[0])
+                                                        setPreview(URL.createObjectURL(e.target.files[0]))
+                                                    }}
+                                                    type="file"
+                                                    accept="image/*"
+                                                    className='form-control'
+                                                >
+                                                </input>
+                                                <div className='preview m-2'>
+                                                    {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
+                                                </div>
+                                            </form>
+
+                                            <div class="check">
+                                                {
+                                                    categorySelect.isFood
+                                                        ?
+                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios1" value="comida" checked />
+                                                        :
+                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios1" value="comida" />
+                                                }
+                                                <label class="form-check-label" for="exampleRadios1">
+                                                    Comida
                                                 </label>
-                                                <Field
-                                                    id="isFood"
-                                                    name="isFood"
-                                                    placeholder="isFood"
-                                                    type="checkbox"
-                                                    className="form-check-input"
-                                                />
+                                            </div>
+                                            <div class="check">
+                                                {
+                                                    categorySelect.isFood
+                                                        ?
+                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="bebida" />
+                                                        :
+                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="bebida" checked/>
+                                                }
+                                                <label class="form-check-label" for="exampleRadios2">
+                                                    Bebida
+                                                </label>
                                             </div>
 
                                             <Field
@@ -238,10 +266,10 @@ const EditCategory = ({ token, categories, getCategories }) => {
                                                     </div>
                                                 )
                                             }
+                                            {submitting ? (<h5 style={{ color: "white" }}>Editando Categoria</h5>) : null}
+                                            {errorImage ? (<h5 style={{ color: "red" }}>La categoria debe tener una imagen</h5>) : <></>}
+                                            {error ? (<h5 style={{ color: "red" }}>Opps, hubo un error</h5>) : <></>}
                                             <button button type="submit" className='btn btn-dark'>Actualizar Categoria</button>
-                                            {submitting ? (<p style={{ color: "black" }}>Editando Categoria</p>) : null}
-                                            {errorImage ? (<p style={{ color: "red" }}>La categoria debe tener una imagen</p>) : <></>}
-                                            {error ? (<p style={{ color: "red" }}>Opps, hubo un error</p>) : <></>}
                                         </Form>)
                                 }}
                             </Formik>
@@ -251,10 +279,10 @@ const EditCategory = ({ token, categories, getCategories }) => {
                     :
                     errorCategory
                         ?
-                        <p style={{ color: "black", fontSize: "3rem" }}>Esta categoria no existe</p>
+                        <p style={{ color: "white", fontSize: "3rem" }}>Esta categoria no existe</p>
                         :
                         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100vw" }}>
-                            <div class="spinner-border text-dark" style={{ width: "10rem", height: "10rem" }} role="status">
+                            <div class="spinner-border text-white" style={{ width: "10rem", height: "10rem" }} role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>

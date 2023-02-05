@@ -5,7 +5,7 @@ import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 import { config } from '../../utils/axios';
 import NavbarAdminDispatch from '../../components/pure/navbarAdminDispatch';
-
+import backgroundImage from "../../resources/background1.jpg"
 const AdminCategories = ({ categories, getCategories, token }) => {
 
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001/api";
@@ -22,41 +22,41 @@ const AdminCategories = ({ categories, getCategories, token }) => {
     }
 
     return (
-        <div className='div-admin'>
+        <div className='div-admin' style={{ backgroundImage:`url(${backgroundImage})`}}>
             <NavbarAdminDispatch></NavbarAdminDispatch>
             <div className="container">
                 <div className='section-title'>
-                    <h3>Tus Categorias</h3>
+                    <h3>Categorias</h3>
                     <button className='btn btn-light' onClick={() => {
                         navigate(`../admin/crear/categoria/`)
                     }}> Crear Categoria </button>
                 </div>
                 <div className="admin-categories">
-                    <div className="row">
+                    <div className="row row-categories-admin">
                         {categories
                             ?
                             categories.map((category) => {
                                 return ((
-                                    <div className="categories col-12 col-md-6 col-xl-4">
-                                        <p>{category.name}</p>
-                                        <img src={category.imageId.url} alt="" />
+                                    <div className="categories col-12 col-md-5 col-xxl-3">
+                                        <h1>{category.name}</h1>
+                                        <img src={category.imageId.url} alt=""  />
                                         {
                                             category.isFood
                                                 ?
-                                                <h2>Comidas</h2>
+                                                <h3>Comidas</h3>
                                                 :
-                                                <h2>Bebida</h2>
+                                                <h3>Bebidas</h3>
                                         }
                                         <div className='categories-buttons'>
                                             <button className='btn btn-light' onClick={() => {
                                                 navigate(`../admin/editar/categoria/${category._id}`)
-                                            }}> Editar Categoria</button>
+                                            }}>Editar </button>
                                             <button className='btn btn-danger' onClick={() => {
                                                 axios.delete(`${API_URL}/category/${category._id}`, config(token))
                                                 setTimeout(() => {
                                                     reload()
                                                 }, 1500)
-                                            }} > Eliminar Categoria </button>
+                                            }} > Eliminar </button>
 
                                         </div>
                                     </div>

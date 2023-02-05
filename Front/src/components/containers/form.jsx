@@ -57,8 +57,7 @@ const FormContact = () => {
                                     const horarioPrev = values.horario
                                     const horarioNew = horarioPrev.split(":").shift()
                                     const horarioNumber = parseInt(horarioNew)
-                                    console.log(horarioNumber)
-                                    if (horarioNumber > 17 && horarioNumber < 24) {
+                                    if (horarioNumber >= 17 ) {
                                         setHorarioError(false)
                                         axios.defaults.headers.post['Content-Type'] = 'application/json';
                                         axios.post(`https://formsubmit.co/ajax/${EMAIL}`, {
@@ -113,7 +112,7 @@ const FormContact = () => {
                                             </div>
                                             <div className="field form-date">
                                                 <label class="form-date__label">Hora</label>
-                                                <Field id="horario" name="horario" type="time" className="form-date__input" min="14:00:00" />
+                                                <Field id="horario" name="horario" type="time" className="form-date__input"  />
                                                 {
                                                     errors.horario && touched.horario && (
                                                         <div>
@@ -124,7 +123,7 @@ const FormContact = () => {
                                                 {
                                                     HorarioError
                                                         ?
-                                                        <p>El horario disponible para reservar es de 5 a 11:59 pm</p>
+                                                        <p>El horario disponible para reservar es de 5pm a 11:59 pm</p>
                                                         :
                                                         <></>
                                                 }

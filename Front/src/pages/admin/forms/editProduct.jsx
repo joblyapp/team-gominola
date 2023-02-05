@@ -7,13 +7,17 @@ import axios from "axios"
 import previewImage from "../../../resources/admin/preview.jpg"
 import { useNavigate, useParams } from 'react-router-dom';
 import NavbarAdmin from "../../../components/pure/navbarAdmin"
-
-const EditProduct = ({ token }) => {
+import backgroundImage from "../../../resources/background1.jpg"
+import MultiSelectEdit2 from './formsDispatch/multiSelectEdit2';
+import { configSimple } from '../../../utils/axios';
+const EditProduct = ({ token, categories, getCategories }) => {
 
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001/api";
 
     const navigate = useNavigate()
     const { id } = useParams()
+
+    let defaultSelections;
 
     const [error, setError] = useState(false);
     const [errorImage, setErrorImage] = useState(false);
@@ -22,9 +26,12 @@ const EditProduct = ({ token }) => {
     const [preview, setPreview] = useState()
     const [product, setProduct] = useState()
     const [errorProduct, setErrorProduct] = useState()
+    const [category, setCategory] = useState(defaultSelections)
+    const [lastCategory, setLastCategory] = useState(defaultSelections)
 
     useEffect(() => {
         getProduct()
+        getCategories()
     }, [])
 
     const getProduct = async () => {
@@ -42,6 +49,7 @@ const EditProduct = ({ token }) => {
             name: yup.string().required("Ponle un nombre a la categoria"),
             description: yup.string(),
             price: yup.number().required(),
+            category: yup.string()
         }
     )
 
@@ -56,6 +64,38 @@ const EditProduct = ({ token }) => {
     } else {
         initialValues = {}
     }
+
+    let categoriesSelections = []
+
+    if (categories) {
+        categories.map((category) => {
+            categoriesSelections.push({
+                value: category._id,
+                label:
+                    (<div>
+                        <h6 style={{ color: "black" }}>{category.name} <img style={{ width: "2rem", height: "2rem" }} src={category.imageId.url} alt="Not Found" /></h6>
+                    </div>)
+            })
+        })
+    }
+
+    function myCategory() {
+        if (categories) {
+            categories.map(categoryMap => {
+                categoryMap.products.map(product => {
+                    if (product._id == id) {
+                        setCategory({ value: categoryMap._id })
+                        setLastCategory(categoryMap)
+                    }
+                })
+            })
+        }
+    }
+
+
+
+
+
 
     let body = {}
 
@@ -74,9 +114,70 @@ const EditProduct = ({ token }) => {
                 axios.put(`${API_URL}/product/${id}`, body, config(token))
                     .then((res) => {
                         setSubmitting(true)
-                        setTimeout(() => {
-                            navigate("../admin/productos")
-                        }, 1000)
+                        if (values.category) {
+                            setSubmitting(false)
+                            axios.get(`${API_URL}/category/${values.category}`, configSimple(token))
+                                .then((res) => {
+                                    console.log(res.data)
+                                    let productsCategory = []
+                                    if (res.data.products) {
+                                        res.data.products.map((product) => {
+                                            productsCategory.push(product._id)
+                                        })
+                                        console.log(productsCategory)
+                                        const body = {
+                                            "name": res.data.name,
+                                            "isFood": res.data.isFood,
+                                            "products": [...productsCategory, id],
+                                            "imageId": res.data.imageId._id,
+                                        }
+                                        console.log(values.category)
+                                        axios.put(`${API_URL}/category/${values.category}`, body, config(token))
+                                            .then((res) => {
+                                                setSubmitting(true)
+                                                setTimeout(() => {
+                                                    navigate("../admin/productos")
+                                                }, 1000)
+
+                                            })
+                                            .catch((e) => {
+                                                console.log(e)
+                                                setError(true)
+                                            })
+
+                                        const newProducts = lastCategory.products.filter((item) => item == product._id)
+
+                                        const bodyLastCategory = {
+                                            "name": lastCategory.name,
+                                            "isFood": lastCategory.isFood,
+                                            "products": newProducts,
+                                            "imageId": lastCategory.imageId._id,
+                                        }
+                                        console.log(newProducts)
+
+                                        axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
+                                            .then((res) => {
+                                                setSubmitting(true)
+                                                console.log(res)
+                                                setTimeout(() => {
+                                                    navigate("../admin/productos")
+                                                }, 1000)
+
+                                            })
+                                            .catch((e) => {
+                                                console.log(e)
+                                                setError(true)
+                                            })
+                                    }
+                                }).catch((e) => {
+                                    setError(true)
+                                })
+                        } else {
+                            setSubmitting(true)
+                            setTimeout(() => {
+                                navigate("../admin/productos")
+                            }, 1000)
+                        }
                     })
                     .catch((e) => {
                         console.log(e)
@@ -94,9 +195,70 @@ const EditProduct = ({ token }) => {
             axios.put(`${API_URL}/product/${id}`, body, config(token))
                 .then((res) => {
                     setSubmitting(true)
-                    setTimeout(() => {
-                        navigate("../admin/productos")
-                    }, 1000)
+                    if (values.category) {
+                        setSubmitting(false)
+                        axios.get(`${API_URL}/category/${values.category}`, configSimple(token))
+                            .then((res) => {
+                                console.log(res.data)
+                                let productsCategory = []
+                                if (res.data.products) {
+                                    res.data.products.map((product) => {
+                                        productsCategory.push(product._id)
+                                    })
+                                    console.log(productsCategory)
+                                    const body = {
+                                        "name": res.data.name,
+                                        "isFood": res.data.isFood,
+                                        "products": [...productsCategory, id],
+                                        "imageId": res.data.imageId._id,
+                                    }
+                                    console.log(values.category)
+                                    axios.put(`${API_URL}/category/${values.category}`, body, config(token))
+                                        .then((res) => {
+                                            setSubmitting(true)
+                                            setTimeout(() => {
+                                                navigate("../admin/productos")
+                                            }, 1000)
+
+                                        })
+                                        .catch((e) => {
+                                            console.log(e)
+                                            setError(true)
+                                        })
+
+                                    const newProducts = lastCategory.products.filter((item) => item == product._id)
+
+                                    const bodyLastCategory = {
+                                        "name": lastCategory.name,
+                                        "isFood": lastCategory.isFood,
+                                        "products": newProducts,
+                                        "imageId": lastCategory.imageId._id,
+                                    }
+                                    console.log(newProducts)
+
+                                    axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
+                                        .then((res) => {
+                                            setSubmitting(true)
+                                            console.log(res)
+                                            setTimeout(() => {
+                                                navigate("../admin/productos")
+                                            }, 1000)
+
+                                        })
+                                        .catch((e) => {
+                                            console.log(e)
+                                            setError(true)
+                                        })
+                                }
+                            }).catch((e) => {
+                                setError(true)
+                            })
+                    } else {
+                        setSubmitting(true)
+                        setTimeout(() => {
+                            navigate("../admin/productos")
+                        }, 1000)
+                    }
                 })
                 .catch((e) => {
                     console.log(e)
@@ -106,7 +268,7 @@ const EditProduct = ({ token }) => {
     }
 
     return (
-        <div className='createCategory'>
+        <div className='createCategory' style={{ backgroundImage: `url(${backgroundImage})` }}>
             {
                 product
                     ?
@@ -116,23 +278,6 @@ const EditProduct = ({ token }) => {
                         </div>
                         <h2 className='createCTitle'>Ingresa los datos para editar tu producto</h2>
                         <div className='forms'>
-                            <h2 className='createCTitle'>Foto del producto</h2>
-                            <form action="" className='form-edit-image'>
-                                <input
-                                    filename={file}
-                                    onChange={e => {
-                                        setFile(e.target.files[0])
-                                        setPreview(URL.createObjectURL(e.target.files[0]))
-                                    }}
-                                    type="file"
-                                    accept="image/*"
-                                    className='form-control'
-                                >
-                                </input>
-                                <div className='preview'>
-                                    {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
-                                </div>
-                            </form>
 
                             <Formik
                                 initialValues={
@@ -156,7 +301,26 @@ const EditProduct = ({ token }) => {
                                                     </div>
                                                 )
                                             }
-                                            <Field id="description" name="description" type="text" placeholder="Descripcion del producto" className="form-control" />
+
+                                            <h2 className=''>Foto del producto</h2>
+                                            <form action="" className='form-edit-image'>
+                                                <input
+                                                    filename={file}
+                                                    onChange={e => {
+                                                        setFile(e.target.files[0])
+                                                        setPreview(URL.createObjectURL(e.target.files[0]))
+                                                    }}
+                                                    type="file"
+                                                    accept="image/*"
+                                                    className='form-control'
+                                                >
+                                                </input>
+                                                <div className='preview m-2'>
+                                                    {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
+                                                </div>
+                                            </form>
+
+                                            <Field id="description" name="description" type="text" as="textarea" placeholder="Descripcion del producto" className="form-control" />
                                             {
                                                 errors.description && touched.description && (
                                                     <div>
@@ -164,6 +328,36 @@ const EditProduct = ({ token }) => {
                                                     </div>
                                                 )
                                             }
+
+                                            {category
+                                                ?
+                                                <Field
+                                                    name="category"
+                                                    id="category"
+                                                    placeholder="Selecciona los productos para esta categoria"
+                                                    isMulti={false}
+                                                    component={MultiSelectEdit2}
+                                                    options={categoriesSelections}
+                                                    optionsDefault={category}
+                                                />
+                                                :
+                                                <div>
+                                                    <Field
+                                                        name="category"
+                                                        id="category"
+                                                        placeholder="Selecciona los productos para esta categoria"
+                                                        isMulti={false}
+                                                        component={MultiSelectEdit2}
+                                                        options={categoriesSelections}
+                                                        optionsDefault={{ value: "x" }}
+                                                    />
+                                                    {myCategory()}
+                                                </div>
+
+
+                                            }
+
+
                                             <Field id="price" name="price" type="number" step="0.1" min="0" placeholder="precio del producto" className="form-control" />
                                             {
                                                 errors.price && touched.price && (
@@ -172,10 +366,13 @@ const EditProduct = ({ token }) => {
                                                     </div>
                                                 )
                                             }
+
+                                            {submitting ? (<h5 style={{ color: "black" }}>Creando Producto</h5>) : null}
+                                            {errorImage ? (<h5 style={{ color: "red" }}>El producto debe tener una imagen</h5>) : <></>}
+                                            {error ? (<h5 style={{ color: "red" }}>Opps, hubo un error</h5>) : <></>}
+
                                             <button type="submit" className='btn btn-dark'>Crear Producto</button>
-                                            {submitting ? (<p style={{ color: "black" }}>Creando Producto</p>) : null}
-                                            {errorImage ? (<p style={{ color: "red" }}>El producto debe tener una imagen</p>) : <></>}
-                                            {error ? (<p style={{ color: "red" }}>Opps, hubo un error</p>) : <></>}
+
                                         </Form>)
                                 }}
                             </Formik>
@@ -184,10 +381,10 @@ const EditProduct = ({ token }) => {
                     :
                     errorProduct
                         ?
-                        <p style={{ color: "black", fontSize: "3rem" }}>Este producto no existe</p>
+                        <p style={{ color: "white", fontSize: "3rem" }}>Este producto no existe</p>
                         :
                         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100vw" }}>
-                            <div class="spinner-border text-dark" style={{ width: "10rem", height: "10rem" }} role="status">
+                            <div class="spinner-border text-white" style={{ width: "10rem", height: "10rem" }} role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>

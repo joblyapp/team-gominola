@@ -5,30 +5,36 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+    background-size: cover;
+    
     .navbarCreateCategory{
-        background-color: black;
+        background-color: transparent;
     }
 
     .createCTitle {
-        color: black;
+        color: rgb(255, 255, 255);
         margin: 1rem;
+        background-color: rgba(99, 156, 206, 0.658);
+        border-radius: 1rem;
+        
     }
 
     .forms {
         border: 1px solid black;
+        background-color: rgba(99, 156, 206, 0.658);
         padding: 1rem;
         border-radius: 1rem;
-        background-color: rgb(255, 255, 255);
         justify-content: center;
         align-items: center;
         display: flex;
         flex-direction: column;
-        width: auto;
+        color:white;
 
         .preview {
             .img-fluid {
-                max-height: 20rem;
-                max-width: 20rem;
+                height: 20rem;
+                width: 20rem;
+                border-radius: 1rem;
             }
         }
 
@@ -50,7 +56,7 @@
             }
 
             .text-error {
-                color: black;
+                color: rgb(255, 255, 255);
             }
         }
 

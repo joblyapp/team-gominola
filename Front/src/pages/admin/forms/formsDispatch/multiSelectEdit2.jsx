@@ -1,23 +1,17 @@
 import Select from 'react-select';
 import React, { useState, useEffect } from 'react';
-const MultiSelectEdit = ({ field, optionsDefault,form, options, isMulti = false, placeholder = 'Select', }) => {
+const MultiSelectEdit2 = ({ field, optionsDefault, form, options, isMulti = false, placeholder = 'Select', }) => {
 
     function onChange(option) {
         form.setFieldValue(
             field.name,
-            (option).map((item) => item.value)
+            option ? (option).map((item) => item.value) : []
         );
     }
 
     useEffect(() => {
-        form.setFieldValue(
-            field.name,
-            (optionsDefault).map((item) => item.value)
-        );
+        form.setFieldValue(field.name, optionsDefault.value)
     }, [])
-
-
-
 
     const getValue = () => {
         if (options) {
@@ -59,4 +53,4 @@ const MultiSelectEdit = ({ field, optionsDefault,form, options, isMulti = false,
     }
 }
 
-export default MultiSelectEdit;
+export default MultiSelectEdit2;
