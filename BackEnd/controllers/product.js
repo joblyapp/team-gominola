@@ -17,22 +17,21 @@ const createItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
     try {
-        const { id, ...body } = matchedData(req)
-        console.log(id,body)
-        const data = await productsModel.findOneAndUpdate(
+        const id = req.params.id
+        const body = req.body
+        const data = await productsModel.findByIdAndUpdate(
             id, body
         )
-        const dataActu = await productsModel.findById(id).populate("imageId")
-        res.send(dataActu)
+        res.send({ data })
     } catch (e) {
-        handleHttpError(res, "ERROR_UPDATE_ITEM")
+        console.log(e)
+        handleHttpError(res, "ERROR_UPDATE_PRODUCTS")
     }
 }
 
 const getItem = async (req, res) => {
     try {
         const {id} = matchedData(req)
-        console.log(id)
         const data = await productsModel.findById(id).populate("imageId")
         res.send( data )
     } catch (e) {

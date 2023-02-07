@@ -24,6 +24,7 @@ const Home = ({ getCategories }) => {
             <About ></About>
             <Form></Form>
             <Hours></Hours>
+            <Footer></Footer>
         </div>
     );
 }

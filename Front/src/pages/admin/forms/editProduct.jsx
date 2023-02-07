@@ -99,7 +99,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
 
     let body = {}
 
-    const createStorage = (values) => {
+    const createStorage = async (values) => {
         if (file !== null) {
             const formData = new FormData()
             formData.append("myfile", file)
@@ -115,6 +115,69 @@ const EditProduct = ({ token, categories, getCategories }) => {
                     .then((res) => {
                         setSubmitting(true)
                         console.log(values.category)
+                        if (values.category) {
+                            setSubmitting(false)
+                            axios.get(`${API_URL}/category/${values.category}`, configSimple(token))
+                                .then((res) => {
+
+                                    let productsCategory = []
+                                    if (res.data.products) {
+                                        res.data.products.map((product) => {
+                                            productsCategory.push(product._id)
+                                        })
+
+                                        const body = {
+                                            "name": res.data.name,
+                                            "isFood": res.data.isFood,
+                                            "products": [...productsCategory, id],
+                                            "imageId": res.data.imageId._id,
+                                        }
+
+                                        axios.put(`${API_URL}/category/${values.category}`, body, configSimple(token))
+                                            .then((res) => {
+                                                setSubmitting(true)
+                                                setTimeout(() => {
+                                                    navigate("../admin/productos")
+                                                }, 1000)
+
+                                            })
+                                            .catch((e) => {
+
+                                                setError(true)
+                                            })
+
+                                        if (category) {
+                                            const newProducts = lastCategory.products.filter((item) => item == product._id)
+                                            const bodyLastCategory = {
+                                                "name": lastCategory.name,
+                                                "isFood": lastCategory.isFood,
+                                                "products": newProducts,
+                                                "imageId": lastCategory.imageId._id,
+                                            }
+                                            axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
+                                                .then((res) => {
+                                                    setSubmitting(true)
+
+                                                    setTimeout(() => {
+                                                        navigate("../admin/productos")
+                                                    }, 1000)
+
+                                                })
+                                                .catch((e) => {
+
+                                                    setError(true)
+                                                })
+                                        }
+                                    }
+                                }).catch((e) => {
+                                    setError(true)
+                                })
+                        } else {
+                            setSubmitting(true)
+                            setTimeout(() => {
+                                navigate("../admin/productos")
+                            }, 1000)
+                        }
                     })
                     .catch((e) => {
 
@@ -129,14 +192,82 @@ const EditProduct = ({ token, categories, getCategories }) => {
                 "price": values.price,
                 "imageId": product.imageId._id,
             }
-
             axios.put(`${API_URL}/product/${id}`, body, config(token))
                 .then((res) => {
                     setSubmitting(true)
-                    console.log(res)
-                    console.log(id)
+                    console.log(values.category)
+
+                    if (values.category) {
+                        setSubmitting(false)
+                        axios.get(`${API_URL}/category/${values.category}`, configSimple(token))
+                            .then((res) => {
+
+                                let productsCategory = []
+                                if (res.data.products) {
+                                    res.data.products.map((product) => {
+                                        productsCategory.push(product._id)
+                                    })
+
+                                    const body = {
+                                        "name": res.data.name,
+                                        "isFood": res.data.isFood,
+                                        "products": [...productsCategory, id],
+                                        "imageId": res.data.imageId._id,
+                                    }
+
+                                    axios.put(`${API_URL}/category/${values.category}`, body, configSimple(token))
+                                        .then((res) => {
+                                            setSubmitting(true)
+                                            setTimeout(() => {
+                                                navigate("../admin/productos")
+                                            }, 1000)
+
+                                        })
+                                        .catch((e) => {
+                                            setError(true)
+                                        })
+
+                                    if (category) {
+                                        const newProducts = lastCategory.products.filter((item) => item == product._id)
+
+                                        const bodyLastCategory = {
+                                            "name": lastCategory.name,
+                                            "isFood": lastCategory.isFood,
+                                            "products": newProducts,
+                                            "imageId": lastCategory.imageId._id,
+                                        }
+
+
+                                        axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
+                                            .then((res) => {
+                                                setSubmitting(true)
+
+                                                setTimeout(() => {
+                                                    navigate("../admin/productos")
+                                                }, 1000)
+
+                                            })
+                                            .catch((e) => {
+                                                console.log(e)
+
+                                                setError(true)
+                                            })
+                                    }
+                                }
+                            }).catch((e) => {
+
+                                setError(true)
+                            })
+                    } else {
+                        setSubmitting(true)
+
+                        setTimeout(() => {
+                            navigate("../admin/productos")
+                        }, 1000)
+                    }
                 })
                 .catch((e) => {
+
                     setError(true)
                 })
         }
@@ -153,23 +284,6 @@ const EditProduct = ({ token, categories, getCategories }) => {
                         </div>
                         <h2 className='createCTitle'>Ingresa los datos para editar tu producto</h2>
                         <div className='forms'>
-                            <h2 className=''>Foto del producto</h2>
-                            <form action="" className='form-edit-image'>
-                                <input
-                                    filename={file}
-                                    onChange={e => {
-                                        setFile(e.target.files[0])
-                                        setPreview(URL.createObjectURL(e.target.files[0]))
-                                    }}
-                                    type="file"
-                                    accept="image/*"
-                                    className='form-control'
-                                >
-                                </input>
-                                <div className='preview m-2'>
-                                    {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
-                                </div>
-                            </form>
 
                             <Formik
                                 initialValues={
@@ -194,7 +308,23 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                                 )
                                             }
 
-
+                                            <h2 className=''>Foto del producto</h2>
+                                            <form action="" className='form-edit-image'>
+                                                <input
+                                                    filename={file}
+                                                    onChange={e => {
+                                                        setFile(e.target.files[0])
+                                                        setPreview(URL.createObjectURL(e.target.files[0]))
+                                                    }}
+                                                    type="file"
+                                                    accept="image/*"
+                                                    className='form-control'
+                                                >
+                                                </input>
+                                                <div className='preview m-2'>
+                                                    {preview ? <img className='img-profile img-fluid' src={preview} alt="x" /> : <img className='img-profile img-fluid' src={previewImage} alt="x" />}
+                                                </div>
+                                            </form>
 
                                             <Field id="description" name="description" type="text" as="textarea" placeholder="Descripcion del producto" className="form-control" />
                                             {
@@ -204,6 +334,32 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                                     </div>
                                                 )
                                             }
+
+                                            {category
+                                                ?
+                                                <Field
+                                                    name="category"
+                                                    id="category"
+                                                    placeholder="Selecciona los productos para esta categoria"
+                                                    isMulti={false}
+                                                    component={MultiSelectEdit2}
+                                                    options={categoriesSelections}
+                                                    optionsDefault={category}
+                                                />
+                                                :
+                                                <div>
+                                                    <Field
+                                                        name="category"
+                                                        id="category"
+                                                        placeholder="Selecciona los productos para esta categoria"
+                                                        isMulti={false}
+                                                        component={MultiSelectEdit2}
+                                                        options={categoriesSelections}
+                                                    />
+                                                    {myCategory()}
+                                                </div>
+                                            }
+
 
                                             <Field id="price" name="price" type="number" step="0.1" min="0" placeholder="precio del producto" className="form-control" />
                                             {

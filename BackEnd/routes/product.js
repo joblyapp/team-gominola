@@ -5,9 +5,9 @@ const {createItem,updateItem,getItems,getItem,deleteItem} = require("../controll
 const authMiddleware = require("../middleware/sesion")
 
 router.post("/", validatorCreateProduct,authMiddleware, createItem)
-router.put("/:id", validatorEditorProduct,authMiddleware, updateItem)
 router.get("/", authMiddleware, getItems)
 router.get("/:id", validatorGetItem,authMiddleware, getItem)
+router.post("/:id",  validatorEditorProduct, authMiddleware, updateItem)
 router.delete("/:id", validatorGetItem,authMiddleware, deleteItem)
 
 

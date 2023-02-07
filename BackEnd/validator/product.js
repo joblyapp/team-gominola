@@ -21,8 +21,7 @@ const validatorCreateProduct = [
 const validatorEditorProduct = [
     check("id")
         .exists()
-        .notEmpty()
-        .isMongoId(),
+        .notEmpty(),
     check("name")
         .exists()
         .notEmpty(),

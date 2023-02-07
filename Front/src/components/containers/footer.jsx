@@ -1,6 +1,6 @@
 import React from 'react';
 import "../../styles/scss/footer.scss"
-import logo from "../../resources/logo.png"
+import logo from "../../resources/logo-transparente.png"
 const Footer = () => {
     return (
         <div className='div-footer'>
@@ -9,9 +9,8 @@ const Footer = () => {
                     <div className="col-12 col-lg-3 col-footer">
                         <div className="text">
                             <a href="#home">
-                                <h3>Inicio</h3>
+                                <h7>2023 Limes & Limones / All right resered</h7>
                             </a>
-
                         </div>
                     </div>
                     <div className="col-12 col-lg-3 col-footer">
@@ -21,6 +20,14 @@ const Footer = () => {
                             </a>
                         </div>
                     </div>
+                    <div className="col-12 col-lg-3 col-footer">
+                        <div className="text">
+                            <a href="mailto:support@limesylimones.com">
+                                <h7>support@limesylimones.com</h7>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
