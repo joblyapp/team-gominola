@@ -154,6 +154,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                                 "products": newProducts,
                                                 "imageId": lastCategory.imageId._id,
                                             }
+                                            console.log(bodyLastCategory)
                                             axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
                                                 .then((res) => {
                                                     setSubmitting(true)
@@ -214,7 +215,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                         "products": [...productsCategory, id],
                                         "imageId": res.data.imageId._id,
                                     }
-
+                                    
                                     axios.put(`${API_URL}/category/${values.category}`, body, configSimple(token))
                                         .then((res) => {
                                             setSubmitting(true)
@@ -228,7 +229,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                         })
 
                                     if (category) {
-                                        const newProducts = lastCategory.products.filter((item) => item == product._id)
+                                        const newProducts = lastCategory.products.filter((item) => item._id !== product._id)
 
                                         const bodyLastCategory = {
                                             "name": lastCategory.name,
@@ -236,6 +237,9 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                             "products": newProducts,
                                             "imageId": lastCategory.imageId._id,
                                         }
+
+                                        console.log(bodyLastCategory)
+                                        console.log(category.value)
 
 
                                         axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
