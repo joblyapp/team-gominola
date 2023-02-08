@@ -15,6 +15,9 @@ const FormContact = () => {
     var now = new Date()
     var minDate = now.toISOString().substring(0, 10);
     const [HorarioError, setHorarioError] = useState();
+    const [HorarioPastError, setHorarioPastError] = useState();
+    const [SundayError, setSundayError] = useState();
+
 
     const ContactSchema = yup.object().shape(
         {
@@ -45,7 +48,7 @@ const FormContact = () => {
         <div className='div-form' id="form">
             <div className="form" style={{ backgroundImage: `url(${formBackground})` }}>
                 <div className="form-background-color">
-                    <h1 className='title-form' id="form-title">!Reserva tu mesa!</h1>
+                    <h1 className='title-form' id="form-title">¡Reserva tu mesa!</h1>
                     <div className="row form-contact">
                         <div className="col-12 col-md-6 col-form">
                             <Formik
@@ -56,17 +59,52 @@ const FormContact = () => {
                                 onSubmit={async (values) => {
                                     const horarioPrev = values.horario
                                     const horarioNew = horarioPrev.split(":").shift()
+                                    const horarioNewMinutes = horarioPrev.split(":").pop()
                                     const horarioNumber = parseInt(horarioNew)
-                                    if (horarioNumber >= 17 ) {
+                                    const minsNumber = parseInt(horarioNewMinutes)
+                                    const month = now.getMonth() + 1
+                                    const day = now.getDate()
+                                    const fechaReservation = values.fecha
+                                    const dayName = new Date(fechaReservation).getDay() + 1
+                                    const monthReservation = values.fecha.split("-").slice(1, 2).toString()
+                                    const dayReservation = values.fecha.split("-").pop()
+
+                                    if (horarioNumber >= 17) {
                                         setHorarioError(false)
-                                        axios.defaults.headers.post['Content-Type'] = 'application/json';
-                                        axios.post(`https://formsubmit.co/ajax/${EMAIL}`, {
-                                            name: values.name,
-                                            telefono: values.telefono,
-                                            fecha: values.fecha,
-                                            horario: values.horario,
-                                            personas: values.personas,
-                                        })
+                                        if (dayName != 7) {
+                                            if (month == monthReservation && day == dayReservation) {
+                                                if ((horarioNumber == now.getHours() && minsNumber > now.getMinutes() )
+                                                || horarioNumber > now.getHours()) {
+                                                    setHorarioError(false)
+                                                    setHorarioPastError(false)
+                                                    setSundayError(false)
+                                                    axios.defaults.headers.post['Content-Type'] = 'application/json';
+                                                    axios.post(`https://formsubmit.co/ajax/${EMAIL}`, {
+                                                        name: values.name,
+                                                        telefono: values.telefono,
+                                                        fecha: values.fecha,
+                                                        horario: values.horario,
+                                                        personas: values.personas,
+                                                    })
+                                                } else {
+                                                    setHorarioPastError(true)
+                                                }
+                                            } else {
+                                                setSundayError(false)
+                                                setHorarioError(false)
+                                                setHorarioPastError(false)
+                                                axios.defaults.headers.post['Content-Type'] = 'application/json';
+                                                axios.post(`https://formsubmit.co/ajax/${EMAIL}`, {
+                                                    name: values.name,
+                                                    telefono: values.telefono,
+                                                    fecha: values.fecha,
+                                                    horario: values.horario,
+                                                    personas: values.personas,
+                                                })
+                                            }
+                                        } else if (dayName == 7) {
+                                            setSundayError(true)
+                                        }
                                     } else {
                                         setHorarioError(true)
                                     }
@@ -78,7 +116,7 @@ const FormContact = () => {
                                     return (
                                         <Form className='form' action={`https://formsubmit.co/${EMAIL}`} method="POST">
                                             <div className="field">
-                                                <Field id="name" name="name" type="text" placeholder="Nombre para la reserva" className="input-form" />
+                                                <Field id="name" name="name" type="text" placeholder="Nombre para la reserva" maxlength="30" className="input-form" />
                                                 {
                                                     errors.name && touched.name && (
                                                         <div>
@@ -88,7 +126,12 @@ const FormContact = () => {
                                                 }
                                             </div>
                                             <div className="field">
-                                                <Field id="telefono" name="telefono" type="number" placeholder="Telefono para la reserva" className="input-form" />
+                                                <Field id="telefono" name="telefono" type="number" placeholder="Telefono para la reserva"
+                                                    onInput={
+                                                        (e) => {
+                                                            e.target.value = Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+                                                        }}
+                                                    className="input-form phone" />
                                                 {
                                                     errors.telefono && touched.telefono && (
                                                         <div>
@@ -110,7 +153,7 @@ const FormContact = () => {
                                             </div>
                                             <div className="field form-date">
                                                 <label class="form-date__label">Hora</label>
-                                                <Field id="horario" name="horario" type="time" className="form-date__input"  />
+                                                <Field id="horario" name="horario" type="time" className="form-date__input" />
                                                 {
                                                     errors.horario && touched.horario && (
                                                         <div>
@@ -122,6 +165,20 @@ const FormContact = () => {
                                                     HorarioError
                                                         ?
                                                         <p>El horario disponible para reservar es de 5pm a 11:59 pm</p>
+                                                        :
+                                                        <></>
+                                                }
+                                                {
+                                                    HorarioPastError
+                                                        ?
+                                                        <p>Las reservas para hoy deben ser en un horario futuro</p>
+                                                        :
+                                                        <></>
+                                                }
+                                                {
+                                                    SundayError
+                                                        ?
+                                                        <p>Los domingos no abre nuestro bar</p>
                                                         :
                                                         <></>
                                                 }
@@ -147,7 +204,7 @@ const FormContact = () => {
                                                 }
                                             </div>
                                             <input type="submit" className='btn' value="Reservar" data-bs-toggle="modal" data-bs-target="#exampleModal" />
-                                            {errors.name || errors.telefono || errors.fecha || errors.horario || errors.personas || HorarioError
+                                            {errors.name || errors.telefono || errors.fecha || errors.horario || errors.personas || HorarioError || HorarioPastError || SundayError
                                                 ?
                                                 <div className="">
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -184,7 +241,7 @@ const FormContact = () => {
                                 <div className="title">
                                     <div className="line"></div>
                                     <div className="text">
-                                        <h3>Direccion:</h3>
+                                        <h3>Dirección:</h3>
                                     </div>
                                 </div>
                                 <div className="text-form">
@@ -206,10 +263,10 @@ const FormContact = () => {
                                 <div className="title">
                                     <div className="line"></div>
                                     <div className="text">
-                                        <h5>!Siguenos en nuestras redes!</h5>
+                                        <h5>¡Siguenos en nuestras redes!</h5>
                                     </div>
                                 </div>
-                                <div className="icons">
+                                <div className="icons text-center">
                                     <a href="https://www.instagram.com/identikit_app/">
                                         <i class="bi bi-instagram"></i>
                                     </a>

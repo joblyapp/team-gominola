@@ -9,6 +9,7 @@ const CartaBebidas = ({ categories, getCategories }) => {
     useEffect(() => {
         getCategories()
     }, [])
+    
 
     return (
         <div className='div-carta'  style={{ backgroundImage: `url(${presentation})`}}>

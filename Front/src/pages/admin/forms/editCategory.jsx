@@ -53,12 +53,18 @@ const EditCategory = ({ token, categories, getCategories }) => {
     const navigate = useNavigate()
 
     let initialValues = {}
-
+   
     if (categorySelect) {
+        let isFood;
+        if (categorySelect.isFood) {
+            isFood = "comida";
+        } else {
+            isFood = "bebida";
+        }
         initialValues = {
             name: categorySelect.name,
-            isFood: categorySelect.isFood,
-            products: categorySelect.products
+            isFood: isFood,
+            products: categorySelect.products,
         }
     } else {
         initialValues = {
@@ -104,19 +110,19 @@ const EditCategory = ({ token, categories, getCategories }) => {
                     </div>)
             })
         })
-       
+
     }
-    
+
     let body = {}
     const createStorage = async (values) => {
-       
+
         if (file !== null) {
             const formData = new FormData()
             formData.append("myfile", file)
             const peticion = axios.post(`${API_URL}/storage/`, formData, configForm(token))
             peticion.then((res) => {
                 let isFood;
-               
+
                 if (values.isFood === "bebida") {
                     isFood = false;
                 } else {
@@ -136,13 +142,13 @@ const EditCategory = ({ token, categories, getCategories }) => {
                         }, 1000)
                     })
                     .catch((e) => {
-                        
+
                         setError(true)
                     })
             })
         } else {
             let isFood;
-         
+
             if (values.isFood === "bebida") {
                 isFood = false;
             } else {
@@ -162,7 +168,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
                     }, 1000)
                 })
                 .catch((e) => {
-                    
+
                     setError(true)
                 })
         }
@@ -241,7 +247,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
                                                         ?
                                                         <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="bebida" />
                                                         :
-                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="bebida" checked/>
+                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="bebida" checked />
                                                 }
                                                 <label class="form-check-label" for="exampleRadios2">
                                                     Bebida
@@ -268,7 +274,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
                                             {submitting ? (<h5 style={{ color: "white" }}>Editando Categoria</h5>) : null}
                                             {errorImage ? (<h5 style={{ color: "red" }}>La categoria debe tener una imagen</h5>) : <></>}
                                             {error ? (<h5 style={{ color: "red" }}>Opps, hubo un error</h5>) : <></>}
-                                            <button button type="submit" className='btn btn-dark'>Actualizar Categoria</button>
+                                            <button button type="submit" className='btn btn-dark'>Editar</button>
                                         </Form>)
                                 }}
                             </Formik>

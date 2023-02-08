@@ -68,7 +68,6 @@
 
                         .title-section {
                             display: flex;
-                            justify-content: center;
                             align-items: center;
 
                             .line {
@@ -109,6 +108,19 @@
                                 .description {
                                     text-align: start;
 
+                                    .b-description{
+                                        background-color: transparent;
+                                        border: transparent;
+                                        margin: 0;
+                                        padding:0;
+                                        text-align: start;
+                                    }
+                                    .ver-mas{
+                                        font-size: 0.8rem;
+                                        text-decoration-line:underline;
+                                        padding: 0;
+                                        margin: 0;
+                                    }
                                 }
 
                             }
@@ -122,12 +134,14 @@
                         .tab-pane {
 
                             img {
-                                height: 30rem;
-                                width: 30rem;
+                                height: 20rem;
+                                width: 20rem;
                                 border-radius: 20%;
                                 margin: 0.5rem;
+                                transition: 0.2s ease-in-out;
                             }
                         }
+                        
                     }
                 }
             }
@@ -142,6 +156,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: 0.2s ease-in-out;
+    opacity: 1;
 }
 
 
@@ -158,8 +174,8 @@
 @media screen and (max-width:1400px) {
 
     .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        height: 27rem;
-        width: 27rem;
+        height: 18rem;
+        width: 18rem;
     }
 
 }
@@ -167,16 +183,16 @@
 @media screen and (max-width:1200px) {
 
     .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        height: 22rem;
-        width: 22rem;
+        height: 16rem;
+        width: 16rem;
     }
 }
 
 @media screen and (max-width:992px) {
 
     .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        width: 18rem;
-        height: 18rem;
+        width: 16rem;
+        height: 16rem;
     }
 
 }
@@ -190,8 +206,8 @@
     }
 
     .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        height: 14rem;
-        width: 14rem;
+        height: 13rem;
+        width: 13rem;
     }
 
 }
@@ -200,8 +216,8 @@
 
 
     .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        height: 14rem;
-        width: 14rem;
+        height: 12rem;
+        width: 12rem;
     }
 
 }

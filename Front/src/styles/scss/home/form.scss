@@ -63,6 +63,17 @@
                                 }
                             }
 
+                            .phone[type=number]::-webkit-inner-spin-button,
+                            .phone[type=number]::-webkit-outer-spin-button {
+                                -webkit-appearance: none;
+                                margin: 0;
+                            }
+
+                            .phone[type=number] {
+                                -moz-appearance: textfield;
+                            }
+
+
                         }
 
                         h4 {
@@ -118,6 +129,7 @@
                             display: flex;
                             width: 100%;
                             align-items: center;
+                            margin: 0rem 2rem;
 
                             .bi {
                                 font-size: 2rem;
@@ -126,8 +138,8 @@
 
                             .bi:hover {
                                 color: $golden;
-                                font-size: 3rem;
-                                transition: 0.5s;
+                                font-size: 2.2rem;
+                                transition: 0.2s;
                             }
                         }
                     }
@@ -210,15 +222,17 @@
     background-color: transparent;
     background: transparent;
 }
-.form-select__input select, 
-option{
-    color:rgb(0, 0, 0);
+
+.form-select__input select,
+option {
+    color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
 
 }
-.form-select__input select, 
-option:hover{
-    color:red
+
+.form-select__input select,
+option:hover {
+    color: red
 }
 
 .form-select__input:focus {
@@ -265,6 +279,11 @@ option:hover{
                                 .bi {
                                     font-size: 1.5rem;
                                     margin: 1rem;
+                                }
+                                .bi:hover {
+                                    color: $golden;
+                                    font-size: 1.75rem;
+                                    transition: 0.2s;
                                 }
                             }
                         }

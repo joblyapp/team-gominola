@@ -3,24 +3,56 @@ import React, { useState, useEffect } from 'react';
 const SectionProduct = ({ category }) => {
 
 
+    let array = []
+
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+    const [seeMore, setSeeMore] = useState([]);
 
     useEffect(() => {
+        seeMoreArray()
         const changeWidth = () => {
             setScreenWidth(window.innerWidth);
         }
 
         window.addEventListener('resize', changeWidth)
 
+
         return () => {
             window.removeEventListener('resize', changeWidth)
         }
+
     }, [])
+
+    function cutDescription(description) {
+        return description.substr(0, 40).concat(" ....")
+    }
+
+    function seeMoreFunction(keyProduct) {
+        category.products.forEach((element, key) => {
+            if (keyProduct == key) {
+                array.push(!seeMore[keyProduct])
+            } else {
+                array.push(false)
+            }
+        });
+        setSeeMore(array)
+    }
+
+    function seeMoreArray() {
+        category.products.forEach((element, key) => {
+            array.push(false)
+        });
+        setSeeMore(array)
+    }
+
+
+
 
 
 
     return (
         <div className='col-carta'>
+
             {screenWidth < 768
                 ?
                 <div className="section">
@@ -32,52 +64,46 @@ const SectionProduct = ({ category }) => {
                         {
                             category.products.map((product, key) => {
                                 return ((
-                                    <div>
-                                        {key === 0
-                                            ?
-                                            <div>
-                                                <button class="nav-link active div-product" id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
-                                                    <div className="title-product">
-                                                        <div className='titleP'>
-                                                            <img src={category.imageId.url} alt="x" />
-                                                            <h3>{product.name}</h3>
-                                                        </div>
-                                                        <div className="priceP">
-                                                            ${product.price.$numberDecimal}
-                                                        </div>
+                                    <div key={key}>
+                                        <div>
+                                            <button class="nav-link  div-product" onClick={() => {
+                                                seeMoreFunction(key)
+                                            }} id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
+                                                <div className="title-product">
+                                                    <div className='titleP'>
+                                                        <img src={category.imageId.url} alt="x" />
+                                                        <h3>{product.name}</h3>
                                                     </div>
-                                                    <div className="description">
-                                                        <p>{product.description}</p>
+                                                    <div className="priceP">
+                                                        ${product.price.$numberDecimal} MXN
                                                     </div>
-                                                </button>
-                                                <div class="tab-content" id={`v-pills${category.name}`}>
-                                                    <div class="tab-pane fade show active " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
-                                                        <img src={product.imageId.url} alt="" />
-                                                    </div>
+                                                </div>
+                                                <div className="description">
+                                                    {
+                                                        product.description.length > 40
+                                                            ?
+                                                            seeMore[key]
+                                                                ?
+                                                                <div>
+                                                                    <p>{product.description}</p>
+                                                                    <p class="ver-mas"> Ver menos </p>
+                                                                </div>
+                                                                :
+                                                                <div>
+                                                                    <p>{cutDescription(product.description)}</p>
+                                                                    <p class="ver-mas" > Ver más </p>
+                                                                </div>
+                                                            :
+                                                            <p>{product.description}</p>
+                                                    }
+                                                </div>
+                                            </button>
+                                            <div class="tab-content" id={`v-pills${category.name}`}>
+                                                <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
+                                                    <img src={product.imageId.url} alt="" />
                                                 </div>
                                             </div>
-                                            :
-                                            <div>
-                                                <button class="nav-link  div-product" id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
-                                                    <div className="title-product">
-                                                        <div className='titleP'>
-                                                            <img src={category.imageId.url} alt="x" />
-                                                            <h3>{product.name}</h3>
-                                                        </div>
-                                                        <div className="priceP">
-                                                            ${product.price.$numberDecimal}
-                                                        </div>
-                                                    </div>
-                                                    <div className="description">
-                                                        <p>{product.description}</p>
-                                                    </div>
-                                                </button>
-                                                <div class="tab-content" id={`v-pills${category.name}`}>
-                                                    <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
-                                                        <img src={product.imageId.url} alt="" />
-                                                    </div>
-                                                </div>
-                                            </div>}
+                                        </div>
                                     </div>
                                 ))
                             })
@@ -96,39 +122,39 @@ const SectionProduct = ({ category }) => {
                                 {
                                     category.products.map((product, key) => {
                                         return ((
-                                            <div>
-                                                {key === 0
-                                                    ?
-                                                    <button class="nav-link active div-product" id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
-                                                        <div className="title-product">
-                                                            <div className='titleP'>
-                                                                <img src={category.imageId.url} alt="x" />
-                                                                <h3>{product.name}</h3>
-                                                            </div>
-                                                            <div className="priceP">
-                                                                ${product.price.$numberDecimal}
-                                                            </div>
+                                            <div key={key}>
+                                                <button class="nav-link  div-product" onClick={() => {
+                                                    seeMoreFunction(key)
+                                                }} id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
+                                                    <div className="title-product">
+                                                        <div className='titleP'>
+                                                            <img src={category.imageId.url} alt="x" />
+                                                            <h3>{product.name}</h3>
                                                         </div>
-                                                        <div className="description">
-                                                            <p>{product.description}</p>
+                                                        <div className="priceP">
+                                                            ${product.price.$numberDecimal}  MXN
                                                         </div>
-                                                    </button>
-                                                    :
-                                                    <button class="nav-link  div-product" id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
-                                                        <div className="title-product">
-                                                            <div className='titleP'>
-                                                                <img src={category.imageId.url} alt="x" />
-                                                                <h3>{product.name}</h3>
-                                                            </div>
-                                                            <div className="priceP">
-                                                                ${product.price.$numberDecimal}
-                                                            </div>
-                                                        </div>
-                                                        <div className="description">
-                                                            <p>{product.description}</p>
-                                                        </div>
-                                                    </button>
-                                                }
+                                                    </div>
+                                                    <div className="description">
+                                                        {
+                                                            product.description.length > 40
+                                                                ?
+                                                                seeMore[key]
+                                                                    ?
+                                                                    <div>
+                                                                        <p>{product.description}</p>
+                                                                        <p class="ver-mas"> Ver menos </p>
+                                                                    </div>
+                                                                    :
+                                                                    <div>
+                                                                        <p>{cutDescription(product.description)}</p>
+                                                                        <p class="ver-mas" > Ver más </p>
+                                                                    </div>
+                                                                :
+                                                                <p>{product.description}</p>
+                                                        }
+                                                    </div>
+                                                </button>
                                             </div>
                                         ))
                                     })
@@ -142,20 +168,11 @@ const SectionProduct = ({ category }) => {
                                 category.products.map((product, key) => {
                                     return ((
                                         <div>
-                                            {key === 0
-                                                ?
-                                                <div class="tab-content" id={`v-pills${category.name}`}>
-                                                    <div class="tab-pane fade show active " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
-                                                        <img src={product.imageId.url} alt="" />
-                                                    </div>
+                                            <div class="tab-content" id={`v-pills${category.name}`}>
+                                                <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
+                                                    <img src={product.imageId.url} alt="" />
                                                 </div>
-                                                :
-                                                <div class="tab-content" id={`v-pills${category.name}`}>
-                                                    <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
-                                                        <img src={product.imageId.url} alt="" />
-                                                    </div>
-                                                </div>
-                                            }
+                                            </div>
                                         </div>
                                     ))
                                 })

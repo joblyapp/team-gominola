@@ -135,7 +135,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
             <div className="navbarCreateCategory">
                 <NavbarAdmin></NavbarAdmin>
             </div>
-            <h2 className='createCTitle'>Ingresa los datos para crear tu categoria</h2>
+            <h2 className='createCTitle'>Ingresa los datos para crear tu producto</h2>
             <div className='forms'>
 
                 <Formik
@@ -179,7 +179,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
                                     </div>
                                 </form>
 
-                                <Field id="price" name="price" type="number" step="0.1" min="0" placeholder="precio del producto" className="form-control" />
+                                <Field id="price" name="price" type="number" step="0.1" min="0" placeholder="Precio del producto" className="form-control" />
                                 {
                                     errors.price && touched.price && (
                                         <div>
@@ -197,7 +197,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
                                     options={categoriesSelections}
                                 />
 
-                                <Field id="description" name="description" as="textarea" placeholder="Descripcion del producto" className="form-control" />
+                                <Field id="description" name="description" as="textarea" maxlength="200" placeholder="Descripcion del producto" className="form-control" />
                                 {
                                     errors.description && touched.description && (
                                         <div>

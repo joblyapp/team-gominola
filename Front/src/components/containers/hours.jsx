@@ -13,7 +13,7 @@ const Hours = () => {
                         <h5 className='visit-day'>Mie  17.00 - 00.00 </h5>
                         <h5 className='visit-day'>Jue  17.00 - 00.00 </h5>
                         <h5 className='visit-day'>Vie  16.00 - 02.00 </h5>
-                        <h5 className='visit-day'>Lun  15.00 - 03.00 </h5>
+                        <h5 className='visit-day'>Sab  15.00 - 03.00 </h5>
                     </div>
                 </div>
             </div>

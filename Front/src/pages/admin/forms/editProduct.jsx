@@ -47,7 +47,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
     const productSchema = yup.object().shape(
         {
             name: yup.string().required("Ponle un nombre a la categoria"),
-            description: yup.string(),
+            description: yup.string().max(200, "La descripción de un producto debe ser de maximo 200 caracteres"),
             price: yup.number().required(),
             category: yup.string()
         }
@@ -56,10 +56,19 @@ const EditProduct = ({ token, categories, getCategories }) => {
     let initialValues = {}
 
     if (product) {
-        initialValues = {
-            name: product.name,
-            description: product.description,
-            price: product.price.$numberDecimal
+        if (lastCategory) {
+            initialValues = {
+                name: product.name,
+                description: product.description,
+                price: product.price.$numberDecimal,
+                category: lastCategory._id
+            }
+        } else {
+            initialValues = {
+                name: product.name,
+                description: product.description,
+                price: product.price.$numberDecimal,
+            }
         }
     } else {
         initialValues = {}
@@ -86,6 +95,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
                     if (product._id == id) {
                         setCategory({ value: categoryMap._id })
                         setLastCategory(categoryMap)
+                        initialValues.category = lastCategory._id
                     }
                 })
             })
@@ -114,7 +124,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
                 axios.put(`${API_URL}/product/${id}`, body, config(token))
                     .then((res) => {
                         setSubmitting(true)
-                        console.log(values.category)
+
                         if (values.category) {
                             setSubmitting(false)
                             axios.get(`${API_URL}/category/${values.category}`, configSimple(token))
@@ -126,10 +136,42 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                             productsCategory.push(product._id)
                                         })
 
+                                        if (category) {
+                                            const newProducts = lastCategory.products.filter((item) => item._id !== product._id)
+
+                                            const bodyLastCategory = {
+                                                "name": lastCategory.name,
+                                                "isFood": lastCategory.isFood,
+                                                "products": newProducts,
+                                                "imageId": lastCategory.imageId._id,
+                                            }
+
+
+
+
+                                            axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
+                                                .then((res) => {
+                                                    setSubmitting(true)
+
+                                                    setTimeout(() => {
+                                                        navigate("../admin/productos")
+                                                    }, 1000)
+
+                                                })
+                                                .catch((e) => {
+
+
+                                                    setError(true)
+                                                })
+                                        }
+
+                                        const newProducts = res.data.products.filter((item) => item._id !== id)
+
+
                                         const body = {
                                             "name": res.data.name,
                                             "isFood": res.data.isFood,
-                                            "products": [...productsCategory, id],
+                                            "products": [...newProducts, id],
                                             "imageId": res.data.imageId._id,
                                         }
 
@@ -145,36 +187,14 @@ const EditProduct = ({ token, categories, getCategories }) => {
 
                                                 setError(true)
                                             })
-
-                                        if (category) {
-                                            const newProducts = lastCategory.products.filter((item) => item == product._id)
-                                            const bodyLastCategory = {
-                                                "name": lastCategory.name,
-                                                "isFood": lastCategory.isFood,
-                                                "products": newProducts,
-                                                "imageId": lastCategory.imageId._id,
-                                            }
-                                            console.log(bodyLastCategory)
-                                            axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
-                                                .then((res) => {
-                                                    setSubmitting(true)
-
-                                                    setTimeout(() => {
-                                                        navigate("../admin/productos")
-                                                    }, 1000)
-
-                                                })
-                                                .catch((e) => {
-
-                                                    setError(true)
-                                                })
-                                        }
                                     }
                                 }).catch((e) => {
+
                                     setError(true)
                                 })
                         } else {
                             setSubmitting(true)
+
                             setTimeout(() => {
                                 navigate("../admin/productos")
                             }, 1000)
@@ -196,7 +216,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
             axios.put(`${API_URL}/product/${id}`, body, config(token))
                 .then((res) => {
                     setSubmitting(true)
-                    console.log(values.category)
+
 
                     if (values.category) {
                         setSubmitting(false)
@@ -209,25 +229,6 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                         productsCategory.push(product._id)
                                     })
 
-                                    const body = {
-                                        "name": res.data.name,
-                                        "isFood": res.data.isFood,
-                                        "products": [...productsCategory, id],
-                                        "imageId": res.data.imageId._id,
-                                    }
-                                    
-                                    axios.put(`${API_URL}/category/${values.category}`, body, configSimple(token))
-                                        .then((res) => {
-                                            setSubmitting(true)
-                                            setTimeout(() => {
-                                                navigate("../admin/productos")
-                                            }, 1000)
-
-                                        })
-                                        .catch((e) => {
-                                            setError(true)
-                                        })
-
                                     if (category) {
                                         const newProducts = lastCategory.products.filter((item) => item._id !== product._id)
 
@@ -238,8 +239,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                             "imageId": lastCategory.imageId._id,
                                         }
 
-                                        console.log(bodyLastCategory)
-                                        console.log(category.value)
+
 
 
                                         axios.put(`${API_URL}/category/${category.value}`, bodyLastCategory, config(token))
@@ -252,11 +252,34 @@ const EditProduct = ({ token, categories, getCategories }) => {
 
                                             })
                                             .catch((e) => {
-                                                console.log(e)
+
 
                                                 setError(true)
                                             })
                                     }
+
+                                    const newProducts = res.data.products.filter((item) => item._id !== id)
+
+
+                                    const body = {
+                                        "name": res.data.name,
+                                        "isFood": res.data.isFood,
+                                        "products": [...newProducts, id],
+                                        "imageId": res.data.imageId._id,
+                                    }
+
+                                    axios.put(`${API_URL}/category/${values.category}`, body, configSimple(token))
+                                        .then((res) => {
+                                            setSubmitting(true)
+                                            setTimeout(() => {
+                                                navigate("../admin/productos")
+                                            }, 1000)
+
+                                        })
+                                        .catch((e) => {
+
+                                            setError(true)
+                                        })
                                 }
                             }).catch((e) => {
 
@@ -330,14 +353,15 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                                 </div>
                                             </form>
 
-                                            <Field id="description" name="description" type="text" as="textarea" placeholder="Descripcion del producto" className="form-control" />
+                                            <Field id="price" name="price" type="number" step="0.1" min="0" placeholder="Precio del producto" className="form-control" />
                                             {
-                                                errors.description && touched.description && (
+                                                errors.price && touched.price && (
                                                     <div>
-                                                        <ErrorMessage component="p" name="description" className='text-error' ></ErrorMessage>
+                                                        <ErrorMessage component="p" name="price" className='text-error' ></ErrorMessage>
                                                     </div>
                                                 )
                                             }
+
 
                                             {category
                                                 ?
@@ -365,20 +389,21 @@ const EditProduct = ({ token, categories, getCategories }) => {
                                             }
 
 
-                                            <Field id="price" name="price" type="number" step="0.1" min="0" placeholder="precio del producto" className="form-control" />
+
+                                            <Field id="description" name="description" type="text" as="textarea" maxlength="200" placeholder="Descripcion del producto" className="form-control" />
                                             {
-                                                errors.price && touched.price && (
+                                                errors.description && touched.description && (
                                                     <div>
-                                                        <ErrorMessage component="p" name="price" className='text-error' ></ErrorMessage>
+                                                        <ErrorMessage component="p" name="description" className='text-error' ></ErrorMessage>
                                                     </div>
                                                 )
                                             }
 
-                                            {submitting ? (<h5 style={{ color: "black" }}>Creando Producto</h5>) : null}
+                                            {submitting ? (<h5 style={{ color: "white" }}>Editando Producto</h5>) : null}
                                             {errorImage ? (<h5 style={{ color: "red" }}>El producto debe tener una imagen</h5>) : <></>}
                                             {error ? (<h5 style={{ color: "red" }}>Opps, hubo un error</h5>) : <></>}
 
-                                            <button type="submit" className='btn btn-dark'>Crear Producto</button>
+                                            <button type="submit" className='btn btn-dark'>Editar</button>
 
                                         </Form>)
                                 }}
