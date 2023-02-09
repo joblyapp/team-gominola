@@ -164,7 +164,7 @@ const FormContact = () => {
                                                 {
                                                     HorarioError
                                                         ?
-                                                        <p>El horario disponible para reservar es de 5pm a 11:59 pm</p>
+                                                        <p>El horario de reserva es de 17:00 a 23:59 Horas.</p>
                                                         :
                                                         <></>
                                                 }
