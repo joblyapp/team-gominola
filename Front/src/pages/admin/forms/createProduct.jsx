@@ -29,7 +29,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
     const productSchema = yup.object().shape(
         {
             name: yup.string().required("Ponle un nombre al producto"),
-            description: yup.string().max(200, "La descripción de un producto debe ser de maximo 200 caracteres"),
+            description: yup.string().max(100, "La descripción de un producto debe ser de maximo 100 caracteres"),
             price: yup.number().required().max(10000000, "El precio maximo de un producto puede ser 10000000"),
             category: yup.string()
         }
@@ -60,7 +60,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
 
 
     const createStorage = async (values) => {
-        
+
         if (file !== null) {
             const formData = new FormData()
             formData.append("myfile", file)
@@ -76,7 +76,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
                 axios.post(`${API_URL}/product/`, body, config(token))
                     .then((res) => {
                         setSubmitting(true)
-                        
+
                         let productIdd = res.data._id
 
                         if (values.category) {
@@ -89,24 +89,24 @@ const CreateProduct = ({ token, categories, getCategories }) => {
                                         res.data.products.map((product) => {
                                             productsCategory.push(product._id)
                                         })
-                                      
+
                                         const body = {
                                             "name": res.data.name,
                                             "isFood": res.data.isFood,
                                             "products": [...productsCategory, productIdd],
                                             "imageId": res.data.imageId._id,
                                         }
-                                       
+
                                         axios.put(`${API_URL}/category/${values.category}`, body, config(token))
                                             .then((res) => {
                                                 setSubmitting(true)
                                                 setTimeout(() => {
                                                     navigate("../admin/productos")
                                                 }, 1000)
-                                                
+
                                             })
                                             .catch((e) => {
-                                              
+
                                                 setError(true)
                                             })
                                     }
@@ -121,7 +121,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
                         }
                     })
                     .catch((e) => {
-                        
+
                         setError(true)
                     })
             })
@@ -197,7 +197,7 @@ const CreateProduct = ({ token, categories, getCategories }) => {
                                     options={categoriesSelections}
                                 />
 
-                                <Field id="description" name="description" as="textarea" maxlength="200" placeholder="Descripcion del producto" className="form-control" />
+                                <Field id="description" name="description" as="textarea" maxlength="100" placeholder="Descripcion del producto" className="form-control" />
                                 {
                                     errors.description && touched.description && (
                                         <div>

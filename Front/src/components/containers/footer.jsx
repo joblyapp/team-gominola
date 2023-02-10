@@ -9,7 +9,7 @@ const Footer = () => {
                     <div className="col-12 col-lg-3 col-footer">
                         <div className="text">
                             <a href="#home">
-                                <h7>2023 Limes & Limones / All right resered</h7>
+                                <h7>2023 Limes & Limones / All right reserved</h7>
                             </a>
                         </div>
                     </div>

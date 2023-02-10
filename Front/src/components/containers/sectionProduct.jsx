@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-const SectionProduct = ({ category }) => {
-
-
-    let array = []
+const SectionProduct = ({ category,seeMoreFunction,seeMore }) => {
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
-    const [seeMore, setSeeMore] = useState([]);
 
     useEffect(() => {
-        seeMoreArray()
         const changeWidth = () => {
             setScreenWidth(window.innerWidth);
         }
@@ -27,23 +22,17 @@ const SectionProduct = ({ category }) => {
         return description.substr(0, 40).concat(" ....")
     }
 
-    function seeMoreFunction(keyProduct) {
-        category.products.forEach((element, key) => {
-            if (keyProduct == key) {
-                array.push(!seeMore[keyProduct])
-            } else {
-                array.push(false)
-            }
-        });
-        setSeeMore(array)
+    function comprobar(product){
+        let valor= false
+        seeMore.forEach((elementMore, keySee) => {
+            if (elementMore.id == product._id && elementMore.valor) {
+                valor = true
+            } 
+        })
+        return valor
+        
     }
 
-    function seeMoreArray() {
-        category.products.forEach((element, key) => {
-            array.push(false)
-        });
-        setSeeMore(array)
-    }
 
 
 
@@ -60,14 +49,14 @@ const SectionProduct = ({ category }) => {
                         <h3>{category.name}</h3>
                         <div className="line"></div>
                     </div>
-                    <div className="products-section nav-pills" id={`v-pills-tab${category.name}`} role="tablist" aria-orientation="vertical" >
+                    <div className="products-section" >
                         {
                             category.products.map((product, key) => {
                                 return ((
                                     <div key={key}>
                                         <div>
                                             <button class="nav-link  div-product" onClick={() => {
-                                                seeMoreFunction(key)
+                                                seeMoreFunction(key,product)
                                             }} id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
                                                 <div className="title-product">
                                                     <div className='titleP'>
@@ -82,15 +71,15 @@ const SectionProduct = ({ category }) => {
                                                     {
                                                         product.description.length > 40
                                                             ?
-                                                            seeMore[key]
+                                                            comprobar(product)
                                                                 ?
                                                                 <div>
-                                                                    <p>{product.description}</p>
+                                                                    <p class="text-description">{product.description}</p>
                                                                     <p class="ver-mas"> Ver menos </p>
                                                                 </div>
                                                                 :
                                                                 <div>
-                                                                    <p>{cutDescription(product.description)}</p>
+                                                                    <p class="text-description">{cutDescription(product.description)}</p>
                                                                     <p class="ver-mas" > Ver más </p>
                                                                 </div>
                                                             :
@@ -112,19 +101,20 @@ const SectionProduct = ({ category }) => {
                 </div>
                 :
                 <div className='row row-carta-big'>
-                    <div className="col-12 col-md-6 col-carta">
+                    <div className="title-section">
+                        <h3>{category.name}</h3>
+                        <div className="line"></div>
+                    </div>
+                    <div className="col-12 col-md-7 col-carta">
                         <div className="section">
-                            <div className="title-section">
-                                <h3>{category.name}</h3>
-                                <div className="line"></div>
-                            </div>
-                            <div class="products-section flex-column nav-pills me-3" id={`v-pills-tab${category.name}`} role="tablist" aria-orientation="vertical">
+
+                        <div className="products-section" >
                                 {
                                     category.products.map((product, key) => {
                                         return ((
                                             <div key={key}>
                                                 <button class="nav-link  div-product" onClick={() => {
-                                                    seeMoreFunction(key)
+                                                    seeMoreFunction(key,product)
                                                 }} id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
                                                     <div className="title-product">
                                                         <div className='titleP'>
@@ -139,15 +129,15 @@ const SectionProduct = ({ category }) => {
                                                         {
                                                             product.description.length > 40
                                                                 ?
-                                                                seeMore[key]
+                                                                comprobar(product)
                                                                     ?
                                                                     <div>
-                                                                        <p>{product.description}</p>
+                                                                        <p class="text-description">{product.description}</p>
                                                                         <p class="ver-mas"> Ver menos </p>
                                                                     </div>
                                                                     :
                                                                     <div>
-                                                                        <p>{cutDescription(product.description)}</p>
+                                                                        <p class="text-description">{cutDescription(product.description)}</p>
                                                                         <p class="ver-mas" > Ver más </p>
                                                                     </div>
                                                                 :
@@ -162,7 +152,7 @@ const SectionProduct = ({ category }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-12 col-md-6 col-carta">
+                    <div className="col-12 col-md-5 col-carta">
                         <div class="tab-content" id={`v-pills${category.name}`}>
                             {
                                 category.products.map((product, key) => {
