@@ -10,13 +10,19 @@ const AdminPage = () => {
     const navigate = useNavigate();
 
     return (
-        <div className='admin' style={{ backgroundImage:`url(${backgroundImage})`}}>
+        <div className='admin' style={{ backgroundImage: `url(${backgroundImage})` }}>
             <NavbarAdminDispatch></NavbarAdminDispatch>
             <div className="title">
                 <h2 className='admin-title'>Panel de administracion Limes y limones</h2>
                 <h6 className='admin-title'>Elige si quieres ver, crear, editar o eliminar un producto o una categoria</h6>
             </div>
             <div className="container">
+                <button className="reservation"
+                    onClick={() => {
+                        navigate("../admin/reservaciones");
+                    }}>
+                    <h1>Reservaciones</h1>
+                </button>
                 <div className="row row-admin">
                     <button className="col-12 col-md-6 col-admin categories"
                         onClick={() => {

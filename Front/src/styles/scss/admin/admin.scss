@@ -11,13 +11,30 @@
             color: rgb(255, 255, 255);
         }
     }
+    .reservation{
+        background-color: white;
+        border-radius: 2rem;
+        border: none;
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        h1{
+            color:black;
+        }
+        
+    }
+    .reservation:hover{
+        background-color: antiquewhite;
+        h1{
+            color:rgb(0, 0, 0);
+        }
+    }
 
 
     .row-admin {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: 1rem;
+        margin-top: 0.5rem;
         gap:1rem;
 
         .col-admin {

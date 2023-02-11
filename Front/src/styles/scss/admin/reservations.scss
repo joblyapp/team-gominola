@@ -1,0 +1,24 @@
+.div-reservations{
+    background-size: cover;
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+    .reservations{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .table{
+            background-color: white;
+            border-radius: 1rem;
+            border-bottom: none;
+        }
+    }
+}
+
+@media (max-width:992px) {
+    .div-reservations{
+        .reservations{
+            margin-top: 5rem;
+        }
+    }
+}

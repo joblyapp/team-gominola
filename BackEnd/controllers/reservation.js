@@ -6,9 +6,10 @@ const getBeforeDayItems = async (req, res) => {
     try {
         const reservations = await reservationModel.find({}).sort('dateR').sort("hourR")
         let list = []
-        let today = new Date()
+        let today = new Date();
+        today.setUTCHours(0, 0, 0, 0);
         reservations.forEach(reservation => {
-            if ((new Date().getTime() < new Date(reservation.dateR).getTime())) {
+            if ((today.getTime() < new Date(reservation.dateR).getTime())) {
                 list.push(reservation)
             }
         })
@@ -33,10 +34,13 @@ const getTodayDayItems = async (req, res) => {
     try {
         const reservations = await reservationModel.find({}).sort('dateR').sort("hourR")
         let list = []
-        let today = new Date()
+        let today = new Date();
+        today.setUTCHours(0, 0, 0, 0);
         reservations.forEach(reservation => {
-            let day = new Date(reservation.dateR)
-            if (day.getDate() + 1 == today.getDate() && day.getMonth() == today.getMonth()) {
+            let day = new Date((reservation.dateR))
+            console.log(day)
+            console.log(today)
+            if ((today.getTime() == day.getTime())) {
                 list.push(reservation)
             }
         })
@@ -51,10 +55,15 @@ const getPastDaysItems = async (req, res) => {
     try {
         const reservations = await reservationModel.find({}).sort({ "dateR": -1 }).sort("hourR")
         let list = []
+        const tiempoTranscurrido = Date.now();
+        const today = new Date(tiempoTranscurrido);
+        today.setUTCHours(0,0,0,0)
         reservations.forEach(reservation => {
-            if ((new Date().getTime() > new Date(reservation.dateR).getTime())) {
+            console.log(today)
+            if ((today.getTime() > new Date(reservation.dateR).getTime())) {
                 list.push(reservation)
             }
+
         })
         res.send(list)
     } catch (e) {
