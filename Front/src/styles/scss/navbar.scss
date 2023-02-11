@@ -1,4 +1,5 @@
 @import "./root.scss";
+
 .nav {
     position: sticky;
     top: 0;
@@ -7,7 +8,7 @@
     text-align: center;
     display: block;
     background-color: transparent;
-    
+
     .list {
         height: 100%;
         display: flex;
@@ -53,11 +54,11 @@
 
     .btn {
         display: none;
-        position:absolute;
+        position: absolute;
         background-color: white;
         padding: 0.3rem;
         right: 2rem;
-        top:0.55rem;
+        top: 0.55rem;
 
         img {
             width: 3rem;
@@ -65,11 +66,13 @@
         }
     }
 }
-a:hover{
+
+a:hover {
     text-decoration: none;
     padding: 0;
-    color:$golden;
+    color: $golden;
 }
+
 @media screen and (max-width:1400px) {
     .nav {
         height: 7rem;
@@ -136,16 +139,19 @@ a:hover{
 @media screen and (max-width:768px) {
     .nav {
         position: fixed;
-        background-color: $gris;
+        background-color: #202020e5;
+        backdrop-filter: blur(30px);
         height: 5rem;
+
         .list {
             display: block;
-            margin: 0;
             margin-top: 0rem;
             flex-direction: column;
             height: auto;
-            background-color: $gris;
+            background-color: #202020e5;
             padding: 0;
+            border-radius: 2rem;
+
             .logo-div {
                 li {
                     .logo {
@@ -153,29 +159,36 @@ a:hover{
                     }
                 }
             }
+
             .list-items {
                 flex-direction: column;
                 width: 100%;
-                margin-top: 1rem;
+                margin-top: 0.5rem;
+
                 .items {
                     font-size: 1.3rem;
-                    margin: 1rem 0;
+                    margin: 0.75rem 0;
                     color: #ffffff;
                     cursor: pointer;
                 }
             }
         }
+
         .btn {
+            background-color: transparent;
             display: block;
+            margin-top: -0.5rem;
+            .icon-nav{
+                font-size: 3rem;
+            }
         }
+
         .btn:hover {
-            background-color: #c7c7c7;
-            padding: 0.5rem;
             transition: 0.3s;
+
             img {
                 width: 3rem;
                 height: 3rem;
-                
             }
         }
 
@@ -184,7 +197,7 @@ a:hover{
             width: auto;
             height: 6rem;
             margin-top: -0.5rem;
-            
         }
+        
     }
 }

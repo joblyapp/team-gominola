@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../../styles/scss/navbar.scss'
 import logo from "../../resources/logo-transparente.png"
+import logoIcon from "../../resources/logo-transparenteIcon.ico"
 import { useNavigate } from 'react-router-dom'
 
 
@@ -38,30 +39,35 @@ export default function NavbarAdmin({ logOut }) {
                         <ul className="list" >
                             <div className="logo-div">
                                 <li onClick={() => {
+                                    toggleNav()
                                     navigate("../home",)
                                 }}>
-                                    <a href="#"><img className='logo' src={logo} alt="" /></a>
+                                    <a href="#"><img className='logo' src={logoIcon} alt="" /></a>
                                 </li>
                             </div>
                             <div className="list-items">
                                 <li className="items"
                                     onClick={() => {
-                                        navigate("../home",)
+                                        toggleNav()
+                                        navigate("../admin/admin",)
                                     }}>
-                                    <a href="" >Ir a landing Page</a>
+                                    <a href="" >Inicio</a>
                                 </li>
                                 <li className="items" onClick={() => {
+                                    toggleNav()
                                     navigate("../admin/categorias",)
                                 }}>
                                     <a href="">Categorias</a>
                                 </li>
                                 <li className="items" onClick={() => {
+                                    toggleNav()
                                     navigate("../admin/productos",)
                                 }}>
                                     <a href="">Productos</a>
                                 </li>
                                 <li className="items"
                                     onClick={() => {
+                                        toggleNav()
                                         logOut()
                                     }}>
                                     <p>LogOut</p>
@@ -70,11 +76,11 @@ export default function NavbarAdmin({ logOut }) {
                             </div>
                         </ul>
                     )}
-                    <a href=""><img className='logo-menu' src={logo} alt="" onClick={() => {
+                    <a href=""><img className='logo-menu' src={logoIcon} alt="" onClick={() => {
                         navigate("../home/",)
                     }} /></a>
                     <button onClick={toggleNav} className="btn">
-                        <img src="https://cdn-icons-png.flaticon.com/512/458/458594.png" alt="" />
+                        <i class="bi bi-x-circle-fill icon-nav" style={{ color: "white" }}></i>
                     </button>
                 </div>)
                 :
@@ -83,6 +89,7 @@ export default function NavbarAdmin({ logOut }) {
                         <ul className="list">
                             <div className="logo-div">
                                 <li onClick={() => {
+                                    toggleNav()
                                     navigate("../home/",)
                                 }}>
                                     <a href=""><img className='logo' src={logo} alt="" /></a>
@@ -91,22 +98,26 @@ export default function NavbarAdmin({ logOut }) {
                             <div className="list-items">
                                 <li className="items"
                                     onClick={() => {
+                                        toggleNav()
                                         navigate("../admin/admin",)
                                     }}>
                                     <a href="" >Inicio</a>
                                 </li>
                                 <li className="items" onClick={() => {
+                                    toggleNav()
                                     navigate("../admin/categorias",)
                                 }}>
                                     <a href="">Categorias</a>
                                 </li>
                                 <li className="items" onClick={() => {
+                                    toggleNav()
                                     navigate("../admin/productos",)
                                 }}>
                                     <a href="">Productos</a>
                                 </li>
                                 <li className="items"
                                     onClick={() => {
+                                        toggleNav()
                                         logOut()
                                     }}>
                                     <p>LogOut</p>
@@ -116,10 +127,11 @@ export default function NavbarAdmin({ logOut }) {
                         </ul>
                     )}
                     <a href=""><img className='logo-menu' src={logo} alt="" onClick={() => {
+                        toggleNav()
                         navigate("../home/",)
                     }} /></a>
                     <button onClick={toggleNav} className="btn">
-                        <img src="https://cdn-icons-png.flaticon.com/512/660/660376.png" alt="" />
+                        <i class="bi bi-list icon-nav" style={{ color: "white" }}></i>
                     </button>
                 </div>)
             }

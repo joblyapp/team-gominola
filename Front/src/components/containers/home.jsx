@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import "../../styles/scss/home/home.scss"
 import presentation from "../../resources/background1.jpg"
-import Presentation from '../../components/containers/presentation';
-import Navbar from "../../components/pure/navbar"
-import Marcas from '../../components/containers/marcas';
-import About from '../../components/containers/about';
-import Form from '../../components/containers/form';
-import Footer from '../../components/containers/footer';
-import Hours from '../../components/containers/hours';
+import Presentation from './presentation';
+import Navbar from "../pure/navbar"
+import Marcas from './marcas';
+import About from './about';
+import Form from './form';
+import Footer from './footer';
+import Hours from './hours';
 
 const Home = ({ getCategories }) => {
 

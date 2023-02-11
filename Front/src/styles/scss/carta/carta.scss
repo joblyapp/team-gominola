@@ -5,162 +5,150 @@
     height: auto;
     min-height: 100vh;
     flex-direction: column;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(40px);
     background-size: 100%;
-    background-position: 50%;
+    background-position: 30%;
 
-    .carta {
-        width: 100%;
-        height: auto;
-        background-size: cover;
-        background-repeat: repeat;
-        background-position: 50%;
+    .title-carta {
+        font-weight: 800;
+        text-decoration: underline;
+        margin: 0.5rem 0rem;
+    }
 
+    .carta-blur {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-        .carta-blur {
+        .row-carta-big {
             width: 100%;
+            border-radius: 0.5rem;
+            display: flex;
+            justify-content: center;
             height: auto;
-            position: absolute;
+        }
+
+        .row-carta {
+            width: 100%;
+            border-radius: 0.5rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            background-position: 50%;
+            height: auto;
+            background-color: #202020e5;
+            backdrop-filter: blur(30px);
+            padding: 2rem 0rem;
+            margin: 2rem;
 
-            .title {
-                font-weight: 700;
-                text-decoration-line: underline;
-                margin: 1rem;
-            }
-
-            .row-carta-big {
-                width: 90%;
-                border-radius: 0.3rem;
-                display: flex;
-                justify-content: center;
+            .section {
+                width: 100vw;
                 height: auto;
-                margin: 1rem 0rem;
-            }
 
-            .row-carta {
-                width: 90%;
-                background-color: #20202086;
-                backdrop-filter: blur(10px);
-                border-radius: 0.3rem;
-                display: flex;
-                justify-content: center;
-                height: auto;
-                margin: 1rem 0rem;
 
                 .title-section {
                     display: flex;
                     align-items: center;
                     width: 100%;
+                    margin-top: 0rem;
 
-                    h3{
-                        width: 60%;
+                    h3 {
+                        width: 100%;
+                        font-weight: 700;
                     }
 
                     .line {
                         border: 1px solid white;
+                        width: 250%;
+                    }
+                }
+            }
+
+            .col-carta {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                background-color: transparent;
+                height: auto;
+
+                .section {
+                    margin: 0rem 0.5rem;
+                    width: 100%;
+                    background-color: transparent;
+                    height: auto;
+
+                    .products-section {
                         width: 100%;
-                        margin: 1rem;
+                        height: auto;
+
+                        .div-product {
+                            margin: 1rem 0;
+                            width: 100%;
+                            height: auto;
+
+                            .title-product {
+                                display: flex;
+                                justify-content: space-between;
+                                width: 100%;
+                                height: auto;
+
+                                .titleP {
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+
+                                    .titleP-name {
+                                        font-weight: 500;
+                                    }
+
+                                    img {
+                                        width: 1.25rem;
+                                        margin: 0 0.5rem;
+                                    }
+                                }
+                            }
+
+                            .description {
+                                text-align: start;
+
+                                .b-description {
+                                    background-color: transparent;
+                                    border: transparent;
+                                    margin: 0;
+                                    padding: 0;
+                                    text-align: start;
+                                }
+
+                                .text-description {
+                                    font-size: 0.9rem;
+                                    margin: 0rem 20rem 0 0;
+                                }
+
+                                .ver-mas {
+                                    font-size: 0.8rem;
+                                    text-decoration-line: underline;
+                                    padding: 0;
+                                    margin: 0;
+                                }
+                            }
+                        }
                     }
                 }
 
-
-
-                .col-carta {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    flex-direction: column;
-                    background-color: transparent;
-
-                    .section {
-                        margin: 0.5rem;
-                        width: 100%;
-                        background-color: transparent;
-
-
-
-                        .products-section {
-                            width: 100%;
-
-
-                            .div-product {
-                                margin: 1rem 0;
-
-                                width: 100%;
-
-                                .title-product {
-                                    display: flex;
-                                    align-items: center;
-                                    justify-content: space-between;
-                                    width: 100%;
-
-
-                                    .titleP {
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-
-                                        img {
-                                            width: 1.5rem;
-                                            margin: 0 0.5rem;
-                                        }
-                                    }
-                                }
-
-                                .description {
-                                    text-align: start;
-
-                                    .b-description {
-                                        background-color: transparent;
-                                        border: transparent;
-                                        margin: 0;
-                                        padding: 0;
-                                        text-align: start;
-                                    }
-                                    .text-description{
-                                        font-size: 0.9rem;
-                                        margin: 0rem 2rem 0 0;
-                                    }
-
-                                    .ver-mas {
-                                        font-size: 0.8rem;
-                                        text-decoration-line: underline;
-                                        padding: 0;
-                                        margin: 0;
-                                    }
-                                }
-
-                            }
-
+                .tab-content {
+                    .tab-pane {
+                        img {
+                            height: 18rem;
+                            width: 18rem;
+                            border-radius: 0.5rem;
+                            margin: 0.5rem;
+                            transition: 0.2s ease-in-out;
                         }
-
-                    }
-
-                    .tab-content {
-
-                        .tab-pane {
-
-                            img {
-                                height: 20rem;
-                                width: 20rem;
-                                border-radius: 0.3rem;
-                                margin: 0.5rem;
-                                transition: 0.2s ease-in-out;
-                            }
-                        }
-
                     }
                 }
             }
         }
     }
-
-
 }
 
 
@@ -185,26 +173,37 @@
 
 @media screen and (max-width:1400px) {
 
-    .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        height: 18rem;
-        width: 18rem;
+    .div-carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
+        height: 16rem;
+        width: 16rem;
     }
 
+    .div-carta .carta-blur .row-carta .col-carta .section .products-section .div-product .description .text-description {
+        margin: 0rem 12rem 0 0;
+    }
 }
 
 @media screen and (max-width:1200px) {
 
-    .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        height: 16rem;
-        width: 16rem;
+    .div-carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
+        height: 14rem;
+        width: 14rem;
+    }
+
+    .div-carta .carta-blur .row-carta .col-carta .section .products-section .div-product .description .text-description {
+        margin: 0rem 9rem 0 0;
     }
 }
 
 @media screen and (max-width:992px) {
 
-    .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        width: 16rem;
-        height: 16rem;
+    .div-carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
+        width: 12rem;
+        height: 12rem;
+    }
+
+    .div-carta .carta-blur .row-carta .col-carta .section .products-section .div-product .description .text-description {
+        margin: 0rem 5rem 0 0;
     }
 
 }
@@ -213,23 +212,41 @@
     .carta-blur {
         margin-top: 5rem;
         width: 100%;
-        height: 100vh;
-        position: absolute;
+        height: auto;
     }
 
-    .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        height: 13rem;
-        width: 13rem;
+    .div-carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
+        height: 11.5rem;
+        width: 11.5rem;
     }
 
+    .div-carta .carta-blur .row-carta .col-carta .section .products-section .div-product .description .text-description {
+        margin: 0rem 0rem 0 0;
+    }
+
+    .div-carta {
+        .carta {
+            .title-carta {
+                font-weight: 800;
+                text-decoration: underline;
+                margin: 0rem 0rem;
+            }
+        }
+    }
+
+    .div-carta {
+        .title-carta {
+            margin: 0rem 0rem;
+        }
+    }
 }
 
 @media screen and (max-width:576px) {
 
 
-    .div-carta .carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
-        height: 12rem;
-        width: 12rem;
+    .div-carta .carta-blur .row-carta .col-carta .tab-content .tab-pane img {
+        height: 10rem;
+        width: 10rem;
     }
 
 }

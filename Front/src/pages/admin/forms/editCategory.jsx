@@ -53,7 +53,7 @@ const EditCategory = ({ token, categories, getCategories }) => {
     const navigate = useNavigate()
 
     let initialValues = {}
-   
+
     if (categorySelect) {
         let isFood;
         if (categorySelect.isFood) {
@@ -230,25 +230,16 @@ const EditCategory = ({ token, categories, getCategories }) => {
                                             </form>
 
                                             <div class="check">
-                                                {
-                                                    categorySelect.isFood
-                                                        ?
-                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios1" value="comida" checked />
-                                                        :
-                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios1" value="comida" />
-                                                }
+                                                <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="comida" />
+
                                                 <label class="form-check-label" for="exampleRadios1">
                                                     Comida
                                                 </label>
                                             </div>
                                             <div class="check">
-                                                {
-                                                    categorySelect.isFood
-                                                        ?
-                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="bebida" />
-                                                        :
-                                                        <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="bebida" checked />
-                                                }
+
+                                                <Field class="form-check-input" type="radio" name="isFood" id="exampleRadios2" value="bebida" />
+
                                                 <label class="form-check-label" for="exampleRadios2">
                                                     Bebida
                                                 </label>

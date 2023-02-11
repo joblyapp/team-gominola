@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import "../../styles/scss/carta/carta.scss"
 import presentation from "../../resources/fondo-carta.jpg"
-
-import SectionProduct from '../../components/containers/sectionProduct';
-import Navbar from '../../components/pure/navbar';
+import Navbar from "../../components/pure/navbar"
+import CartaLoadersComidas from './cartaLoadersComidas';
+import Footer from '../../components/containers/footer';
 
 const CartaComidas = ({ categories, getCategories }) => {
 
@@ -12,25 +12,22 @@ const CartaComidas = ({ categories, getCategories }) => {
     }, [])
 
     return (
-        <div className='div-carta'  style={{ backgroundImage: `url(${presentation})`, }}>
+        <div className='div-carta' style={{ backgroundImage: `url(${presentation})` }}>
             <Navbar></Navbar>
-            <div className='carta' id="carta" >
-
-                <div className='carta-blur'>
-                    <h1 className='text-center title' > ¿Qué deseas Comer? </h1>
-                    <div className="row row-carta">
-                        {categories
-                            ?
-                            categories.map((category) => {
-                                return ((
-                                    category.isFood ? <SectionProduct category={category}></SectionProduct> : <></>
-                                ))
-                            })
-                            :
-                            <div class="spinner-border text-light" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        }
+            <h1 className='text-center title-carta'>¿Qué deseas tomar?</h1>
+            <div className="container" >
+                <div className='carta-blur' >
+                    <div className='row row-carta'>
+                        <div className="nav-pills" id={`v-pills-tab`} role="tablist" aria-orientation="vertical" >
+                            {categories
+                                ?
+                                <CartaLoadersComidas categories={categories} ></CartaLoadersComidas>
+                                :
+                                <div class="spinner-border text-light" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

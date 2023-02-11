@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { viewCategories } from "../../../redux/actions/actions"
-import Home from "../home"
+import Home from "../../../components/containers/home"
 
 const mapStateToProps = (state) => {
     return {

@@ -1,17 +1,16 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import CartaComidasDispatch from "../pages/landing/pagesDispatch/cartaComidasDispatch";
-import CartaDispatch from "../pages/landing/pagesDispatch/cartaDispatch";
 import HomeDispatch from "../pages/landing/pagesDispatch/homeDispatch";
 import LoginDispatch from "../pages/admin/adminDispatch/loginDispatch";
 import AdminCategoriesDispatch from "../pages/admin/adminDispatch/adminCategoriesDispatch";
 import AdminPageDispatch from "../pages/admin/adminDispatch/adminPageDispatch";
-import CreateCategory from "../pages/admin/forms/createCategory";
 import CreateCategoryDispatch from "../pages/admin/forms/formsDispatch/createCategoryDispatch";
 import EditCategoryDispatch from "../pages/admin/forms/formsDispatch/editCategoryDispatch";
 import AdminProductDispatch from "../pages/admin/adminDispatch/adminProductDispatch";
 import CreateProductDispatch from "../pages/admin/forms/formsDispatch/createProductDispatch";
 import EditProductDispatch from "../pages/admin/forms/formsDispatch/editProductDispatch";
 import Carta from "../pages/landing/carta";
+import CartaComidasDispatch from "../pages/landing/pagesDispatch/cartaComidasDispatch";
+import CartaDispatch from "../pages/landing/pagesDispatch/cartaDispatch";
 
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SectionProduct = ({ category,seeMoreFunction,seeMore }) => {
+const SectionProduct = ({ category, seeMoreFunction, seeMore }) => {
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
@@ -18,19 +18,21 @@ const SectionProduct = ({ category,seeMoreFunction,seeMore }) => {
 
     }, [])
 
+
+
     function cutDescription(description) {
         return description.substr(0, 40).concat(" ....")
     }
 
-    function comprobar(product){
-        let valor= false
+    function comprobar(product) {
+        let valor = false
         seeMore.forEach((elementMore, keySee) => {
             if (elementMore.id == product._id && elementMore.valor) {
                 valor = true
-            } 
+            }
         })
         return valor
-        
+
     }
 
 
@@ -41,7 +43,6 @@ const SectionProduct = ({ category,seeMoreFunction,seeMore }) => {
 
     return (
         <div className='col-carta'>
-
             {screenWidth < 768
                 ?
                 <div className="section">
@@ -56,15 +57,15 @@ const SectionProduct = ({ category,seeMoreFunction,seeMore }) => {
                                     <div key={key}>
                                         <div>
                                             <button class="nav-link  div-product" onClick={() => {
-                                                seeMoreFunction(key,product)
+                                                seeMoreFunction(key, product)
                                             }} id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
                                                 <div className="title-product">
                                                     <div className='titleP'>
                                                         <img src={category.imageId.url} alt="x" />
-                                                        <h3>{product.name}</h3>
+                                                        <h3 className='titleP-name text-start'>{product.name}</h3>
                                                     </div>
                                                     <div className="priceP">
-                                                        ${product.price.$numberDecimal} MXN
+                                                        ${product.price.$numberDecimal}
                                                     </div>
                                                 </div>
                                                 <div className="description">
@@ -101,28 +102,29 @@ const SectionProduct = ({ category,seeMoreFunction,seeMore }) => {
                 </div>
                 :
                 <div className='row row-carta-big'>
-                    <div className="title-section">
-                        <h3>{category.name}</h3>
-                        <div className="line"></div>
+                    <div className="section">
+                        <div className="title-section">
+                            <h3>{category.name}</h3>
+                            <div className="line"></div>
+                        </div>
                     </div>
                     <div className="col-12 col-md-7 col-carta">
                         <div className="section">
-
-                        <div className="products-section" >
+                            <div className="products-section" >
                                 {
                                     category.products.map((product, key) => {
                                         return ((
                                             <div key={key}>
-                                                <button class="nav-link  div-product" onClick={() => {
-                                                    seeMoreFunction(key,product)
+                                                <button class="nav-link div-product" onClick={() => {
+                                                    seeMoreFunction(key, product)
                                                 }} id={`${product._id}${category._id}`} data-bs-toggle="pill" data-bs-target={`#v-pills-${product._id}${category._id}`} type="button" role="tab" aria-controls={`v-pills-${product._id}${category._id}`} aria-selected="true">
                                                     <div className="title-product">
                                                         <div className='titleP'>
                                                             <img src={category.imageId.url} alt="x" />
-                                                            <h3>{product.name}</h3>
+                                                            <h3 className='titleP-name text-start'>{product.name}</h3>
                                                         </div>
                                                         <div className="priceP">
-                                                            ${product.price.$numberDecimal}  MXN
+                                                            ${product.price.$numberDecimal}
                                                         </div>
                                                     </div>
                                                     <div className="description">
@@ -171,7 +173,7 @@ const SectionProduct = ({ category,seeMoreFunction,seeMore }) => {
                     </div>
                 </div>
             }
-        </div>
+        </div >
 
     );
 }
