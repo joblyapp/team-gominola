@@ -1,4 +1,3 @@
-const express = require("express")
 const { check } = require("express-validator")
 const validateResults = require("../utils/handleValidator")
 
@@ -28,4 +27,14 @@ const createItemValidator = [
     }
 ]
 
-module.exports = {createItemValidator}
+const deleteValidator = [
+    check("id")
+        .exists()
+        .isMongoId(),
+    (req, res, next) => {
+        return validateResults(req, res, next)
+    }
+]
+
+
+module.exports = {createItemValidator,deleteValidator}
