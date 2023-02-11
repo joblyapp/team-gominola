@@ -46,7 +46,7 @@ const getItem = async (req, res) => {
 const deleteItem = async (req, res) => {
     try {
         const { id } = matchedData(req)
-        const category = await categoryModel.deleteById({id })
+        const category = await categoryModel.findById(id).remove()
         res.send(category)
     } catch (e) {
         handleHttpError(res, "ERROR_DELETE_ITEM")

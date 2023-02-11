@@ -7,7 +7,7 @@ const authMiddleware = require("../middleware/sesion")
 router.post("/", validatorCreateProduct,authMiddleware, createItem)
 router.get("/", authMiddleware, getItems)
 router.get("/:id", validatorGetItem,authMiddleware, getItem)
-router.post("/:id",  validatorEditorProduct, authMiddleware, updateItem)
+router.put("/:id",  validatorEditorProduct, authMiddleware, updateItem)
 router.delete("/:id", validatorGetItem,authMiddleware, deleteItem)
 
 

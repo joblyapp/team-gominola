@@ -19,7 +19,7 @@ const updateItem = async (req, res) => {
     try {
         const { id, ...body } = matchedData(req)
         console.log(id,body)
-        const data = await productsModel.findOneAndUpdate(
+        const data = await productsModel.findByIdAndUpdate(
             id, body
         )
         const dataActu = await productsModel.findById(id).populate("imageId")
