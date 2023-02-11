@@ -6,10 +6,9 @@ const getBeforeDayItems = async (req, res) => {
     try {
         const reservations = await reservationModel.find({}).sort('dateR').sort("hourR")
         let list = []
-        let today = new Date().getDate()
+        let today = new Date()
         reservations.forEach(reservation => {
-            let day = new Date(reservation.dateR).getDate() + 1
-            if (day > today) {
+            if ((new Date().getTime() < new Date(reservation.dateR).getTime())) {
                 list.push(reservation)
             }
         })
@@ -22,7 +21,7 @@ const getBeforeDayItems = async (req, res) => {
 
 const getItems = async (req, res) => {
     try {
-        const reservations = await reservationModel.find({}).sort({'dateR':-1}).sort("hourR")
+        const reservations = await reservationModel.find({}).sort({ 'dateR': -1 }).sort("hourR")
         res.send(reservations)
     } catch (e) {
         console.log(e)
@@ -34,10 +33,10 @@ const getTodayDayItems = async (req, res) => {
     try {
         const reservations = await reservationModel.find({}).sort('dateR').sort("hourR")
         let list = []
-        let today = new Date().getDate()
+        let today = new Date()
         reservations.forEach(reservation => {
-            let day = new Date(reservation.dateR).getDate() + 1
-            if (day == today) {
+            let day = new Date(reservation.dateR)
+            if (day.getDate() + 1 == today.getDate() && day.getMonth() == today.getMonth()) {
                 list.push(reservation)
             }
         })
@@ -52,10 +51,8 @@ const getPastDaysItems = async (req, res) => {
     try {
         const reservations = await reservationModel.find({}).sort({ "dateR": -1 }).sort("hourR")
         let list = []
-        let today = new Date().getDate()
         reservations.forEach(reservation => {
-            let day = new Date(reservation.dateR).getDate() + 1
-            if (day < today) {
+            if ((new Date().getTime() > new Date(reservation.dateR).getTime())) {
                 list.push(reservation)
             }
         })

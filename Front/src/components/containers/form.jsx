@@ -12,6 +12,8 @@ const FormContact = () => {
     const EMAIL = process.env.REACT_APP_EMAIL || "carlosjose445566@gmail.com";
     const navigate = useNavigate()
 
+    const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001/api";
+
     var now = new Date()
     var minDate = now.toISOString().substring(0, 10);
     const [HorarioError, setHorarioError] = useState();
@@ -73,18 +75,18 @@ const FormContact = () => {
                                         setHorarioError(false)
                                         if (dayName != 7) {
                                             if (month == monthReservation && day == dayReservation) {
-                                                if ((horarioNumber == now.getHours() && minsNumber > now.getMinutes() )
-                                                || horarioNumber > now.getHours()) {
+                                                if ((horarioNumber == now.getHours() && minsNumber > now.getMinutes())
+                                                    || horarioNumber > now.getHours()) {
                                                     setHorarioError(false)
                                                     setHorarioPastError(false)
                                                     setSundayError(false)
                                                     axios.defaults.headers.post['Content-Type'] = 'application/json';
-                                                    axios.post(`https://formsubmit.co/ajax/${EMAIL}`, {
+                                                    axios.post(`${API_URL}/reservation/`, {
                                                         name: values.name,
-                                                        telefono: values.telefono,
-                                                        fecha: values.fecha,
-                                                        horario: values.horario,
-                                                        personas: values.personas,
+                                                        phone: values.telefono,
+                                                        dateR: values.fecha.split("T").pop(),
+                                                        hourR: values.horario.toString(),
+                                                        people: values.personas,
                                                     })
                                                 } else {
                                                     setHorarioPastError(true)
@@ -93,14 +95,15 @@ const FormContact = () => {
                                                 setSundayError(false)
                                                 setHorarioError(false)
                                                 setHorarioPastError(false)
-                                                axios.defaults.headers.post['Content-Type'] = 'application/json';
-                                                axios.post(`https://formsubmit.co/ajax/${EMAIL}`, {
+                                                console.log(values.fecha.split("T").pop())
+                                                console.log(values.horario.toString())
+                                                axios.post(`${API_URL}/reservation/`, {
                                                     name: values.name,
-                                                    telefono: values.telefono,
-                                                    fecha: values.fecha,
-                                                    horario: values.horario,
-                                                    personas: values.personas,
-                                                })
+                                                    phone: values.telefono,
+                                                    dateR: values.fecha.split("T").pop(),
+                                                    hourR: values.horario.toString(),
+                                                    people: values.personas,
+                                                }).then().catch(e => console.log(e))
                                             }
                                         } else if (dayName == 7) {
                                             setSundayError(true)
@@ -185,15 +188,15 @@ const FormContact = () => {
                                             </div>
                                             <div className="field form-date">
                                                 <Field name="personas" as="select" className="form-select__input">
-                                                    <option className="option" value="1" selected>1 persona</option>
-                                                    <option className="option" value="2">2 personas</option>
-                                                    <option value="3">3 personas</option>
-                                                    <option value="4">4 personas</option>
-                                                    <option value="5">5 personas</option>
-                                                    <option value="6-10">Entre 6 y 10 personas</option>
-                                                    <option value="11-15">Entre 11 y 15 personas</option>
-                                                    <option value="16-20">Entre 16 y 20 personas</option>
-                                                    <option value="+20">Más de 20 personas</option>
+                                                    <option className="option" value="1 Persona" selected>1 persona</option>
+                                                    <option className="option" value="2 Personas">2 personas</option>
+                                                    <option value="3 Personas">3 personas</option>
+                                                    <option value="4 Personas">4 personas</option>
+                                                    <option value="5 Personas">5 personas</option>
+                                                    <option value="De 6 a 10 Personas">Entre 6 y 10 personas</option>
+                                                    <option value="De 11 a 15 Personas">Entre 11 y 15 personas</option>
+                                                    <option value="De 16 a 20 Personas">Entre 16 y 20 personas</option>
+                                                    <option value="Más de 20 Personas">Más de 20 personas</option>
                                                 </Field>
                                                 {
                                                     errors.personas && touched.personas && (
