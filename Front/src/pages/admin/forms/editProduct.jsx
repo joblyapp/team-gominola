@@ -47,7 +47,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
     const productSchema = yup.object().shape(
         {
             name: yup.string().required("Ponle un nombre a la categoria"),
-            description: yup.string().max(150, "La descripción de un producto debe ser de maximo 150 caracteres"),
+            description: yup.string().max(250, "La descripción de un producto debe ser de maximo 250 caracteres"),
             price: yup.number().required(),
             category: yup.string()
         }
@@ -390,7 +390,7 @@ const EditProduct = ({ token, categories, getCategories }) => {
 
 
 
-                                            <Field id="description" name="description" type="text" as="textarea" maxlength="150" placeholder="Descripcion del producto" className="form-control" />
+                                            <Field id="description" name="description" type="text" as="textarea" maxlength="250" placeholder="Descripcion del producto" className="form-control" />
                                             {
                                                 errors.description && touched.description && (
                                                     <div>
