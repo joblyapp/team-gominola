@@ -20,18 +20,66 @@ const ReservationPage = ({ token }) => {
     const [past, setPast] = useState();
 
     const obtainReservationToday = () => {
-        axios.get(`${API_URL}/reservation/day`, configSimple(token))
-            .then(res => setToday(res.data))
+        axios.get(`${API_URL}/reservation/`, configSimple(token))
+            .then(res => {
+                let list = []
+                var d = new Date();
+                console.log(d)
+                d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+                var yyyymmdd = d.toISOString().slice(0, 10);
+                let x = new Date(yyyymmdd)
+                x.setUTCHours(0, 0, 0, 0)
+                console.log(x)
+                res.data.forEach(reservation => {
+                    let day = new Date((reservation.dateR))
+                    day.setUTCHours(0, 0, 0, 0)
+                    if ((x.getTime() == day.getTime())) {
+                        list.push(reservation)
+                    }
+                })
+                setToday(list)
+            })
     }
 
     const obtainReservationFuture = () => {
         axios.get(`${API_URL}/reservation/beforedays`, configSimple(token))
-            .then(res => setFuture(res.data))
+            .then(res => {
+                let list = []
+                var d = new Date();
+                console.log(d)
+                d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+                var yyyymmdd = d.toISOString().slice(0, 10);
+                let today = new Date(yyyymmdd)
+                today.setUTCHours(0, 0, 0, 0)
+                res.data.forEach(reservation => {
+                    let resFecha = new Date(reservation.dateR)
+                    resFecha.setHours(0, 0, 0, 0)
+                    if ((today.getTime() < resFecha.getTime())) {
+                        list.push(reservation)
+                    }
+                })
+                setFuture(list)
+            })
     }
 
     const obtainReservationPast = () => {
         axios.get(`${API_URL}/reservation/pastdays`, configSimple(token))
-            .then(res => setPast(res.data))
+            .then(res => {
+                let list = []
+                var d = new Date();
+                d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+                var yyyymmdd = d.toISOString().slice(0, 10);
+                let today = new Date(yyyymmdd)
+                today.setUTCHours(0, 0, 0, 0)
+                res.data.forEach(reservation => {
+                    let day = new Date((reservation.dateR))
+                    day.setUTCHours(0, 0, 0, 0)
+                    if ((today.getTime() > day.getTime())) {
+                        list.push(reservation)
+                    }
+                })
+                setPast(list)
+            })
     }
 
     const deleteReservation = (id) => {

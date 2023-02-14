@@ -7,6 +7,7 @@ const getBeforeDayItems = async (req, res) => {
         const reservations = await reservationModel.find({}).sort('dateR').sort("hourR")
         let list = []
         var d = new Date();
+        console.log(d)
         d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
         var yyyymmdd = d.toISOString().slice(0, 10);
         let today = new Date(yyyymmdd)
@@ -29,6 +30,7 @@ const getBeforeDayItems = async (req, res) => {
 
 const getItems = async (req, res) => {
     try {
+        console.log(new Date())
         const reservations = await reservationModel.find({}).sort({ 'dateR': -1 }).sort("hourR")
         res.send(reservations)
     } catch (e) {
@@ -39,16 +41,19 @@ const getItems = async (req, res) => {
 
 const getTodayDayItems = async (req, res) => {
     try {
-        const reservations = await reservationModel.find({}).sort('dateR').sort("hourR")
+        const reservations = reservationModel.find({}).sort('dateR').sort("hourR")
         let list = []
         var d = new Date();
+        console.log(d)
         d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
         var yyyymmdd = d.toISOString().slice(0, 10);
         let x = new Date(yyyymmdd)
         x.setUTCHours(0,0,0,0)
+        console.log(x)
         reservations.forEach(reservation => {
             let day = new Date((reservation.dateR))
             day.setUTCHours(0, 0, 0, 0)
+            console.log(x)
             if ((x.getTime() == day.getTime())) {
                 list.push(reservation)
             }
