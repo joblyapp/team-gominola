@@ -15,7 +15,11 @@ const FormContact = () => {
     const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3001/api";
 
     var now = new Date()
-    var minDate = now.toISOString().substring(0, 10);
+
+    let today = new Date()
+    today.setHours(0, 0, 0, 0);
+    var minDate = today.toISOString().substring(0, 10);
+    
     const [HorarioError, setHorarioError] = useState();
     const [HorarioPastError, setHorarioPastError] = useState();
     const [SundayError, setSundayError] = useState();

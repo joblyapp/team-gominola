@@ -6,10 +6,17 @@ const getBeforeDayItems = async (req, res) => {
     try {
         const reservations = await reservationModel.find({}).sort('dateR').sort("hourR")
         let list = []
-        let today = new Date();
-        today.setUTCHours(0, 0, 0, 0);
+        var d = new Date();
+        d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+        var yyyymmdd = d.toISOString().slice(0, 10);
+        let today = new Date(yyyymmdd)
+        today.setUTCHours(0,0,0,0)
         reservations.forEach(reservation => {
-            if ((today.getTime() < new Date(reservation.dateR).getTime())) {
+            let resFecha = new Date(reservation.dateR)
+            resFecha.setHours(0, 0, 0, 0)
+            console.log(today)
+            console.log(resFecha)
+            if ((today.getTime() < resFecha.getTime())) {
                 list.push(reservation)
             }
         })
@@ -34,13 +41,15 @@ const getTodayDayItems = async (req, res) => {
     try {
         const reservations = await reservationModel.find({}).sort('dateR').sort("hourR")
         let list = []
-        let today = new Date();
-        today.setUTCHours(0, 0, 0, 0);
+        var d = new Date();
+        d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+        var yyyymmdd = d.toISOString().slice(0, 10);
+        let x = new Date(yyyymmdd)
+        x.setUTCHours(0,0,0,0)
         reservations.forEach(reservation => {
             let day = new Date((reservation.dateR))
-            console.log(day)
-            console.log(today)
-            if ((today.getTime() == day.getTime())) {
+            day.setUTCHours(0, 0, 0, 0)
+            if ((x.getTime() == day.getTime())) {
                 list.push(reservation)
             }
         })
@@ -54,13 +63,18 @@ const getTodayDayItems = async (req, res) => {
 const getPastDaysItems = async (req, res) => {
     try {
         const reservations = await reservationModel.find({}).sort({ "dateR": -1 }).sort("hourR")
-        let list = []
-        const tiempoTranscurrido = Date.now();
-        const today = new Date(tiempoTranscurrido);
+        let list = []       
+        var d = new Date();
+        d = new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+        var yyyymmdd = d.toISOString().slice(0, 10);
+        let today = new Date(yyyymmdd)
         today.setUTCHours(0,0,0,0)
         reservations.forEach(reservation => {
+            let day = new Date((reservation.dateR))
+            day.setUTCHours(0, 0, 0, 0)
             console.log(today)
-            if ((today.getTime() > new Date(reservation.dateR).getTime())) {
+            console.log(day)
+            if ((today.getTime() > day.getTime())) {
                 list.push(reservation)
             }
 
