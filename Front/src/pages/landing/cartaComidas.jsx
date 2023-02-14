@@ -14,7 +14,7 @@ const CartaComidas = ({ categories, getCategories }) => {
     return (
         <div className='div-carta' style={{ backgroundImage: `url(${presentation})` }}>
             <Navbar></Navbar>
-            <h1 className='text-center title-carta'>¿Qué deseas tomar?</h1>
+            <h1 className='text-center title-carta'>¿Qué deseas Comer?</h1>
             <div className="container" >
                 <div className='carta-blur' >
                     <div className='row row-carta'>
