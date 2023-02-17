@@ -89,9 +89,17 @@ const SectionProduct = ({ category, seeMoreFunction, seeMore }) => {
                                                 </div>
                                             </button>
                                             <div class="tab-content" id={`v-pills${category.name}`}>
-                                                <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
-                                                    <img src={product.imageId.url} alt="" />
-                                                </div>
+                                                {
+                                                    comprobar(product)
+                                                        ?
+                                                        <div class="tab-pane fade active show" id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
+                                                            <img src={product.imageId.url} alt="" />
+                                                        </div>
+                                                        :
+                                                        <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
+                                                            <img src={product.imageId.url} alt="" />
+                                                        </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -159,13 +167,17 @@ const SectionProduct = ({ category, seeMoreFunction, seeMore }) => {
                             {
                                 category.products.map((product, key) => {
                                     return ((
-                                        <div>
-                                            <div class="tab-content" id={`v-pills${category.name}`}>
-                                                <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
-                                                    <img src={product.imageId.url} alt="" />
-                                                </div>
+
+                                        comprobar(product)
+                                            ?
+                                            <div class="tab-pane fade active show" id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
+                                                <img src={product.imageId.url} alt="" />
                                             </div>
-                                        </div>
+                                            :
+                                            <div class="tab-pane fade " id={`v-pills-${product._id}${category._id}`} role="tabpanel" aria-labelledby={`${product._id}${category._id}`} tabIndex="0">
+                                                <img src={product.imageId.url} alt="" />
+                                            </div>
+
                                     ))
                                 })
                             }
